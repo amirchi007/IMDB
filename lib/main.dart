@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
-import 'package:imdb/appbar.dart';
-import 'package:imdb/login_pages/login.dart';
-import 'package:imdb/login_pages/create_account.dart';
-import 'package:imdb/login_pages/forgot_password.dart';
-import 'package:imdb/login_pages/privacy_notice.dart';
-import 'package:imdb/login_pages/condition_of_use.dart';
+import 'package:get/get.dart';
+import 'package:imdb/routing/routes.dart';
 
-void main(List<String> args) => runApp(const MyApp());
+void main() => runApp(const IMDBApp());
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class IMDBApp extends StatelessWidget {
+  const IMDBApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: LoginAppbar(),
-        body: ConditionOfUse(),
-        // body: PrivacyNotice(),
-        // body: ForgotPassword(),
-        // body: CreateAccount(),
-        // body: Login(),
+      theme: ThemeData(
+        navigationBarTheme: NavigationBarThemeData(
+          labelTextStyle:
+              MaterialStateProperty.resolveWith<TextStyle>((states) {
+            if (states.contains(MaterialState.selected)) {
+              return const TextStyle(color: Color(0xFFF5C418));
+            }
+            return const TextStyle(color: Colors.white);
+          }),
+        ),
       ),
+      title: 'IMDB',
+      initialRoute: '/main',
+      // initialRoute: '/login',
+      // initialRoute: '/register',
+      // initialRoute: '/forgotpassword',
+      // initialRoute: '/privacynotice',
+      // initialRoute: '/conditionofuse',
+      getPages: routes(),
     );
   }
 }

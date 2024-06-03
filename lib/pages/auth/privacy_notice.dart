@@ -1,40 +1,52 @@
 import 'package:flutter/material.dart';
 
 //Login Page
-class PrivacyNotice extends StatefulWidget {
-  const PrivacyNotice({super.key});
+class PrivacyNoticePage extends StatefulWidget {
+  const PrivacyNoticePage({super.key});
 
   @override
-  State<PrivacyNotice> createState() => _PrivacyNoticeState();
+  State<PrivacyNoticePage> createState() => _PrivacyNoticePageState();
 }
 
-class _PrivacyNoticeState extends State<PrivacyNotice> {
+class _PrivacyNoticePageState extends State<PrivacyNoticePage> {
   final forgotPasswordEmail = TextEditingController();
-  final _logincardKey = GlobalKey<FormState>();
+//  final _logincardKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        color: const Color(0xFFFFB409),
+        color: const Color(0xFFF5C418),
         child: const Padding(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(15),
           child: Column(
             children: <Widget>[
               SizedBox(height: 20),
               Text(
                 'IMDb Privacy Notice',
                 style: TextStyle(
+                  color: Colors.black,
+                  decoration: TextDecoration.none,
+                  fontFamily: 'Roboto',
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  shadows: [
+                    Shadow(
+                      color: Color.fromARGB(255, 29, 29, 29), // Shadow color
+                      offset: Offset(0, 4), // Position of the shadow
+                      blurRadius: 8, // Spread radius of the shadow
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 20),
               Text(
-                textAlign: TextAlign.justify,
-                'IMDb Privacy NoticeAt IMDb , we understand that your privacy  matters.This Privacy  Notice outlines  how  we  collect and process your personal information when you use IMDb Services. By using our services , you consent to the practices described below.',
+                'At IMDb , we understand that your privacy  matters.This Privacy  Notice outlines  how  we  collect and process your personal information when you use IMDb Services. By using our services , you consent to the practices described below.',
                 style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
+                  color: Colors.black,
+                  decoration: TextDecoration.none,
+                  fontFamily: 'Roboto',
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(height: 20),
@@ -61,7 +73,7 @@ Legal Compliance :
 Communication :
   We communicate with you via email or on-site forums.
       
-      Advertising :
+Advertising :
   Personalized ads are displayed based on your interests.
       
 Sharing Information with Third Parties:
@@ -70,14 +82,25 @@ Remember, IMDb values ​​your trust and handles your information carefully. F
       
 If you ever receive suspicious emails claiming to be from IMDb, be cautious. Delete them without opening attachments or clicking links. Legitimate communication from IMDb will not ask for your username or password 2.
       ''',
+                style: TextStyle(
+                  color: Colors.black,
+                  decoration: TextDecoration.none,
+                  fontFamily: 'Roboto',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
               SizedBox(height: 20),
               Text(
                 textAlign: TextAlign.justify,
-                "Feel free to explore IMDb's vast database of movies and TV shows, and enjoy your cinematic journey! 🎬🍿",
+                '''Feel free to explore IMDb's vast database of movies and TV 
+            shows, and enjoy your cinematic journey! 🎬🍿''',
                 style: TextStyle(
-                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                  decoration: TextDecoration.none,
+                  fontFamily: 'Roboto',
                   fontSize: 14,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ],
