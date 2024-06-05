@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:imdb/pages/resource.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class Movie {
@@ -19,13 +21,18 @@ class Movie {
   });
 }
 
-class MovieListPage extends StatefulWidget {
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
+
   @override
-  _MovieListPageState createState() => _MovieListPageState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
-class _MovieListPageState extends State<MovieListPage> {
+class _SearchPageState extends State<SearchPage> {
+  TextEditingController search = TextEditingController();
+  final _searchkey = GlobalKey<FormState>();
   double rating = 0;
+  List<Movie> filteredMovies = [];
   final List<Movie> movies = [
     Movie(
         title: 'The Shawshank Redemption',
@@ -83,7 +90,6 @@ class _MovieListPageState extends State<MovieListPage> {
         imageUrl: 'assets/images/10.png'),
     // Add more movies here...
   ];
-  List<Movie> filteredMovies = [];
 
   @override
   void initState() {
@@ -117,8 +123,8 @@ class _MovieListPageState extends State<MovieListPage> {
             direction: Axis.horizontal,
             allowHalfRating: true,
             itemCount: 5,
-            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-            itemBuilder: (context, _) => Icon(
+            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+            itemBuilder: (context, _) => const Icon(
               Icons.star,
               color: Colors.amber,
             ),
@@ -142,45 +148,142 @@ class _MovieListPageState extends State<MovieListPage> {
     );
   }
 
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Form(
+              key: _searchkey,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                width: screenWidth * 0.7,
+                height: 50,
+                child: TextFormField(
+                  controller: search,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please Enter Some Text";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Search...",
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Color.fromARGB(255, 70, 69, 69),
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.red,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.red,
+                        width: 1,
+                      ),
+                    ),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.search),
+                        color: const Color(0xFFF5C418),
+                      ),
+                    ),
+                  ),
+                  onChanged: filterMovies,
                 ),
               ),
-              onChanged: filterMovies,
             ),
-          ),
-          Expanded(
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.filter_list),
+            )
+          ],
+        ),
+        const SizedBox(height: 20),
+        SizedBox(
+          height: screenHeight * 0.65,
+          child: Expanded(
             child: ListView.builder(
               itemCount: filteredMovies.length,
               itemBuilder: (context, index) {
                 final movie = filteredMovies[index];
                 return ListTile(
-                  leading: Image.asset(movie.imageUrl, width: 50, height: 50, fit: BoxFit.cover),
+                  leading: Image.asset(movie.imageUrl,
+                      width: 50, height: 50, fit: BoxFit.cover),
+                      
                   title: Text(movie.title),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('${movie.year} • ${movie.duration}'),
+                      Text(
+                        '${movie.year}    ${movie.duration}',
+                        style: const TextStyle(
+                            fontSize: 13,
+                            fontFamily: 'Roboto',
+                            color: Colors.grey),
+                      ),
                       Row(
                         children: [
-                          Text('IMDb: ${movie.rating}'),
-                          Icon(Icons.star, color: Colors.yellow, size: 16),
-                          SizedBox(width: 8),
-                          Text('Your rating: ${movie.userRating}'),
+                          Text(
+                            '${movie.rating}',
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Roboto',
+                                color: Color.fromARGB(255, 255, 152, 17)),
+                          ),
+                          const Icon(
+                            Icons.star,
+                            color: Color.fromARGB(255, 255, 152, 17),
+                            size: 15,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Your rating: ${movie.userRating}',
+                            style: const TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Roboto',
+                                color: Colors.grey),
+                          ),
                           IconButton(
-                            icon: Icon(Icons.rate_review, color: Colors.blue),
+                            icon: const Icon(Icons.rate_review,
+                                 color: Color.fromARGB(255, 255, 152, 17)),
                             onPressed: () => showRatingDialog(movie),
                           ),
+                          const SizedBox(
+                            height: 0,
+                            width: 80,
+                          ),
+                          const Icon(Icons.movie),
                         ],
                       ),
                     ],
@@ -189,8 +292,8 @@ class _MovieListPageState extends State<MovieListPage> {
               },
             ),
           ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }

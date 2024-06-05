@@ -14,7 +14,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final CarouselController _controller = CarouselController();
   int _current = 0;
-
+  String Name = "Shogun";
+  String Explain =
+      'When a mysterious European ship is found marooned in a nearby fishing village, '
+      'Lord Yoshi Toranaga discovers secrets that could tip the scales of power and devastate his enemies.';
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -25,7 +28,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             child: CarouselSlider(
-              items: imageSliders(),
+              items: imageSliders(Name, Explain),
               carouselController: _controller,
               options: CarouselOptions(
                   autoPlay: true,
@@ -67,8 +70,7 @@ class _HomePageState extends State<HomePage> {
                         color: Color.fromARGB(255, 255, 152, 17),
                       ),
                       const SizedBox(width: 5),
-                      txtstyle(
-                          '9.2/10', Colors.black, 18, FontWeight.bold),
+                      txtstyle('9.2/10', Colors.black, 18, FontWeight.bold),
                     ],
                   ),
                   const SizedBox(height: 5),

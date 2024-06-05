@@ -44,12 +44,6 @@ routes() => [
         transition: Transition.fade,
         transitionDuration: const Duration(milliseconds: 500),
       ),
-      GetPage(
-        name: '/MovieListPage',
-        page: () =>  MovieListPage(),
-        transition: Transition.fade,
-        transitionDuration: const Duration(milliseconds: 500),
-      ),
 
       
     ];

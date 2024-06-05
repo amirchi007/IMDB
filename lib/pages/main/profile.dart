@@ -72,6 +72,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 }
+class User1 {
+  final String name;
+  final String email;
+
+  User1({required this.name, required this.email});
+}
 
 class UserInfoSection extends StatelessWidget {
   final User user;
@@ -80,20 +86,20 @@ class UserInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(16.0),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 40,
             backgroundImage: AssetImage("assets/images/profile.png"),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
-            "amir",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            user.name,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Text("exampel@gmail.com"),
+          Text(user.email),
         ],
       ),
     );
@@ -115,14 +121,13 @@ class FavoriteMoviesSection extends StatelessWidget {
           const SizedBox(height: 10),
           SizedBox(
             height: 200,
-            child: ListView(
+            child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              children: [
-                MovieCard('Poor Things', 'assets/images/unsplash1.png'),
-                MovieCard(
-                    'Shawshank Redemption', 'assets/images/unsplash3.png'),
-                MovieCard('12 Angry Men', 'assets/images/unsplash2.png'),
-              ],
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return MovieSlider(
+                    'assets/images/unsplash${index + 1}.png', 'Title $index');
+              },
             ),
           ),
         ],
@@ -295,7 +300,7 @@ class ChangePasswordSection extends StatelessWidget {
             ),
             obscureText: true,
           ),
-          const SizedBox(height: 310),
+          const SizedBox(height: 200),
           ElevatedButton(
             onPressed: onToggle,
             child: const Text('Change'),

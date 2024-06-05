@@ -103,11 +103,40 @@ stylebtn(Color foregroundColor, Color backgroundColor, double vertical,
   );
 }
 
-linetxt(String title) {
+SizedBoxE(String imagePath, String title) {
+  return InkWell(
+    onTap: () {
+      // Get.to(UserProfilePage());
+    },
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 7.0),
+      child: Column(
+        children: <Widget>[
+          Image.asset(imagePath),
+          txtstyle(title, Colors.black, 15, FontWeight.w700),
+        ],
+      ),
+    ),
+  );
+}
+
+linetxtlogin(String title) {
   return Row(
     children: <Widget>[
       Image.asset('assets/images/line.png'),
-      const SizedBox(width: 22),
+      const SizedBox(width: 40),
+      Text(title),
+      const SizedBox(width: 40),
+      Image.asset('assets/images/line.png'),
+    ],
+  );
+}
+
+linetxtsignup(String title) {
+  return Row(
+    children: <Widget>[
+      Image.asset('assets/images/line.png'),
+      const SizedBox(width: 10),
       Text(title),
       const SizedBox(width: 10),
       Image.asset('assets/images/line.png'),
@@ -146,7 +175,8 @@ final List<String> imgList = [
   'assets/images/shogun.jpg',
   'assets/images/shogun.jpg',
 ];
-List<Widget> imageSliders() {
+
+List<Widget> imageSliders(String title, String explain) {
   return imgList
       .map((item) => ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5.0)),
@@ -177,18 +207,13 @@ List<Widget> imageSliders() {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        txtstyle('Shogun', Colors.yellow, 15, FontWeight.bold),
-                        txtstyle(
-                            'When a mysterious European ship is found marooned in a nearby fishing village, '
-                            'Lord Yoshi Toranaga discovers secrets that could tip the scales of power and devastate his enemies.',
-                            Colors.white,
-                            10,
-                            FontWeight.normal),
+                        txtstyle(title, Colors.yellow, 15, FontWeight.bold),
+                        txtstyle(explain, Colors.white, 10, FontWeight.normal),
                         const SizedBox(height: 5),
                         ElevatedButton(
                           onPressed: () {},
-                          style:
-                              stylebtn(Colors.black, Colors.white, 10, 15, 10),
+                          style: stylebtn(
+                              Colors.black, const Color(0xFFF5C418), 0, 0, 14),
                           child: const Text('See More'),
                         ),
                       ],

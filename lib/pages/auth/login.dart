@@ -12,7 +12,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 
-//Login Page
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -23,10 +22,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool remember_me = false;
   bool password_show = true;
+  bool isLoading = false;
   IconData password_icon = Icons.visibility;
   final loginUsername = TextEditingController();
   final loginPassword = TextEditingController();
   final _logincardKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -62,7 +63,6 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         controller: loginPassword,
                         validator: (value) {
-                          // ignore: non_constant_identifier_names
                           RegExp Password2Regex =
                               RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)(?=.*\w).{8,}$');
                           if (value == null || value.isEmpty) {
@@ -147,64 +147,83 @@ class _LoginPageState extends State<LoginPage> {
                         width: double.infinity,
                         decoration: shadowbtn(),
                         child: ElevatedButton(
-                          onPressed: () async {
+                          onPressed: isLoading ? null : () async {
                             if (_logincardKey.currentState!.validate()) {
-                              http
-                                  .post(
-                                    Uri.parse(
-                                        'http://192.168.43.154/api/login'),
-                                    headers: {
-                                      HttpHeaders.contentTypeHeader:
-                                          'application/json; charset=UTF-8',
-                                    },
-                                    body: jsonEncode({
-                                      'username': loginUsername.text,
-                                      'password': loginPassword.text,
-                                    }),
-                                  )
-                                  .then((value) => {
-                                        if (value.statusCode == 200)
-                                          {
-                                            toastification.show(
-                                                backgroundColor: Colors.green,
-                                                context: context,
-                                                title: const Text(
-                                                    "Login up successfully"),
-                                                autoCloseDuration:
-                                                    const Duration(seconds: 3)),
-                                            Get.to( RatingAndReviewsPage)
-                                          }
-                                        else
-                                          {
-                                            toastification.show(
-                                                backgroundColor: Colors.red,
-                                                context: context,
-                                                title: const Text(
-                                                    "The information is invalid"),
-                                                autoCloseDuration:
-                                                    const Duration(seconds: 3))
-                                          }
-                                      })
-                                  .onError((error, stackTrace) => {});
-                            } else {
-                              toastification.show(
+                              setState(() {
+                                isLoading = true;
+                              });
+
+                              try {
+                                final response = await http.post(
+                                  Uri.parse('http://192.168.43.154/api/login'),
+                                  headers: {
+                                    HttpHeaders.contentTypeHeader:
+                                        'application/json; charset=UTF-8',
+                                  },
+                                  body: jsonEncode({
+                                    'username': loginUsername.text,
+                                    'password': loginPassword.text,
+                                  }),
+                                );
+
+                                if (response.statusCode == 200) {
+                                  toastification.show(
+                                    backgroundColor: Colors.green,
+                                    context: context,
+                                    title:
+                                        const Text("Login successfully"),
+                                    autoCloseDuration:
+                                        const Duration(seconds: 3),
+                                  );
+                                  Get.to(Main());
+                                } else {
+                                  toastification.show(
+                                    backgroundColor: Colors.red,
+                                    context: context,
+                                    title:
+                                        const Text("The information is invalid"),
+                                    autoCloseDuration:
+                                        const Duration(seconds: 3),
+                                  );
+                                }
+                              } catch (error) {
+                                toastification.show(
                                   backgroundColor: Colors.red,
                                   context: context,
                                   title:
-                                      const Text("The information is invalid"),
+                                      const Text("An error occurred"),
                                   autoCloseDuration:
-                                      const Duration(seconds: 3));
-                                      strokeWidth: 2;
+                                      const Duration(seconds: 3),
+                                );
+                              } finally {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              }
+                            } else {
+                              toastification.show(
+                                backgroundColor: Colors.red,
+                                context: context,
+                                title:
+                                    const Text("The information is invalid"),
+                                autoCloseDuration:
+                                    const Duration(seconds: 3),
+                              );
                             }
-                            Get.to(Main());
+                            //Get.to(Main());
                           },
                           style: stylebtn(Colors.black, const Color(0xFFF6B100),
                               20, 30, 15),
-                          child: const Text("Login"),
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation<Color>(Colors.white),
+                                )
+                              : const Text("Login"),
                         ),
                       ),
                       const SizedBox(height: 25),
-                      linetxt('New to IMDb ?'),
+                      linetxtlogin('New to IMDb ?'),
                       const SizedBox(height: 25),
                       Container(
                         width: double.infinity,
