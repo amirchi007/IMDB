@@ -3,6 +3,10 @@ import 'package:imdb/pages/appbar/main.dart';
 import 'package:imdb/pages/main/home.dart';
 import 'package:imdb/pages/main/profile.dart';
 import 'package:imdb/pages/main/search.dart';
+import 'package:imdb/pages/main/rating.dart';
+import 'package:imdb/pages/main/clickfilm.dart';
+import 'package:imdb/pages/main/movie.dart';
+
 
 int currentPageIndex = 0;
 
@@ -52,7 +56,10 @@ class _MainState extends State<Main> {
       body: <Widget>[
         HomePage(),
         MovieListPage(),
-        UserProfilePage(),
+        // UserProfilePage(),
+        // RatingAndReviewsPage(),
+        // const MoviePage(),
+        const SearchPage(),
       ][currentPageIndex],
     );
   }

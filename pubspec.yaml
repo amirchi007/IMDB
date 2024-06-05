@@ -40,7 +40,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  get: ^4.1.4
+  get: ^4.1.42
   http: ^1.2.1
   toastification: ^1.2.1
   carousel_slider: ^4.0.0
