@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:imdb/pages/appbar/main.dart';
-import 'package:imdb/pages/auth/login.dart';
 import 'package:imdb/pages/main/home.dart';
-import 'package:imdb/pages/main/search.dart';
 import 'package:imdb/pages/main/profile.dart';
-import 'package:imdb/pages/main/movie.dart';
+import 'package:imdb/pages/main/search.dart';
 
 int currentPageIndex = 0;
 
@@ -53,7 +51,7 @@ class _MainState extends State<Main> {
       ),
       body: <Widget>[
         HomePage(),
-        const MoviePage(),
+        MovieListPage(),
         UserProfilePage(),
       ][currentPageIndex],
     );

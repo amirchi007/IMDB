@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:imdb/routing/auth/login.dart';
+import 'package:imdb/pages/resource.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -19,7 +21,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   }
 
   Future<User> fetchUser() async {
-    final response = await http.get(Uri.parse('https://example.com/api/user'));
+    final response = await http.get(Uri.parse('https://google.com'));
 
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));
@@ -41,27 +43,23 @@ class _UserProfilePageState extends State<UserProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            FutureBuilder<User>(
-              future: user,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (!snapshot.hasData) {
-                  return Center(child: Text('No data'));
-                } else {
-                  return UserInfoSection(user: snapshot.data!);
-                }
-              },
+            const CircleAvatar(
+              radius: 40,
+              backgroundImage: AssetImage("assets/images/profile.png"),
             ),
+            const SizedBox(height: 10),
+            const Text(
+              "amir",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const Text("exampel@gmail.com"),
             if (!_showChangePassword) FavoriteMoviesSection(),
             if (!_showChangePassword)
               Column(
                 children: [
                   ChangePasswordButton(onPressed: _toggleChangePassword),
                   LogoutButton(onPressed: () {
-                    // Get.to(Login());
+                    Get.to(Login());
                     // Logout logic here
                   }),
                 ],
@@ -82,20 +80,20 @@ class UserInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return const Padding(
+      padding: EdgeInsets.all(16.0),
       child: Column(
         children: [
           CircleAvatar(
             radius: 40,
-            backgroundImage: NetworkImage(user.profilePicture),
+            backgroundImage: AssetImage("assets/images/profile.png"),
           ),
           SizedBox(height: 10),
           Text(
-            user.name,
+            "amir",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Text(user.email),
+          Text("exampel@gmail.com"),
         ],
       ),
     );
@@ -110,19 +108,20 @@ class FavoriteMoviesSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Favorite',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             height: 200,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                MovieCard('Poor Things', 'assets/images/movie1.jpg'),
-                MovieCard('Shawshank Redemption', 'assets/images/movie2.jpg'),
-                MovieCard('12 Angry Men', 'assets/images/movie3.jpg'),
+                MovieCard('Poor Things', 'assets/images/unsplash1.png'),
+                MovieCard(
+                    'Shawshank Redemption', 'assets/images/unsplash3.png'),
+                MovieCard('12 Angry Men', 'assets/images/unsplash2.png'),
               ],
             ),
           ),
@@ -142,7 +141,7 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 120,
-      margin: EdgeInsets.only(right: 10),
+      margin: const EdgeInsets.only(right: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -151,10 +150,10 @@ class MovieCard extends StatelessWidget {
             child: Image.asset(imagePath,
                 fit: BoxFit.cover, height: 150, width: 120),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Text(
             title,
-            style: TextStyle(fontSize: 14),
+            style: const TextStyle(fontSize: 14),
             overflow: TextOverflow.ellipsis,
           ),
         ],
@@ -175,6 +174,7 @@ class ChangePasswordButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         child: Text('Change Password'),
+        style: stylebtn(Colors.white, Colors.black, 10, 140, 12),
       ),
     );
   }
@@ -196,46 +196,110 @@ class ChangePasswordSection extends StatelessWidget {
             'Change Password',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 10),
-          const TextField(
+          const SizedBox(height: 20),
+          TextField(
             decoration: InputDecoration(
-              labelText: 'Current Password',
-              border: OutlineInputBorder(),
-            ),
-            obscureText: true,
-          ),
-          const SizedBox(height: 10),
-          const TextField(
-            decoration: InputDecoration(
-              labelText: 'New Password',
-              border: OutlineInputBorder(),
-              suffixIcon: Icon(Icons.visibility_off),
-            ),
-            obscureText: true,
-          ),
-          const SizedBox(height: 10),
-          const TextField(
-            decoration: InputDecoration(
-              labelText: 'Repeat Password',
-              border: OutlineInputBorder(),
-              suffixIcon: Icon(Icons.visibility_off),
-            ),
-            obscureText: true,
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Checkbox(
-                value: false,
-                onChanged: (bool? value) {},
+              label: const Text('Current Password'),
+              hintText: 'Enter Your Current Password',
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(10),
               ),
-              Text('Remember Me'),
-            ],
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.black,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.red,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  color: Colors.red,
+                  width: 1,
+                ),
+              ),
+            ),
+            obscureText: true,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
+          TextField(
+            decoration: InputDecoration(
+              label: const Text('New Password'),
+              hintText: 'Enter Your New Password',
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.black,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.red,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  color: Colors.red,
+                  width: 1,
+                ),
+              ),
+            ),
+            obscureText: true,
+          ),
+          const SizedBox(height: 20),
+          TextField(
+            decoration: InputDecoration(
+              label: const Text('Repeat Password'),
+              hintText: 'Repeat Password Here',
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.black,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.red,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  color: Colors.red,
+                  width: 1,
+                ),
+              ),
+            ),
+            obscureText: true,
+          ),
+          const SizedBox(height: 310),
           ElevatedButton(
             onPressed: onToggle,
-            child: Text('Change'),
+            child: const Text('Change'),
+            style: stylebtn(Colors.white, Colors.black, 10, 169, 12),
           ),
         ],
       ),
@@ -254,7 +318,8 @@ class LogoutButton extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: ElevatedButton(
         onPressed: onPressed,
-        child: const Text('Log out'),
+        child: Text('Log out'),
+        style: stylebtn(Colors.white, Colors.black, 10, 170, 11),
       ),
     );
   }

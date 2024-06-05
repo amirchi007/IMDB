@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:imdb/appbar.dart';
 import 'package:imdb/pages/main/rating.dart';
 import 'package:imdb/pages/resource.dart';
 import 'package:imdb/routing/auth/condition_of_use.dart';
 import 'package:imdb/routing/auth/privacy_notice.dart';
 import 'package:imdb/routing/auth/forgot_password.dart';
 import 'package:imdb/routing/auth/register.dart';
+import 'package:imdb/routing/main/main.dart';
 import 'package:toastification/toastification.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -194,8 +194,9 @@ class _LoginPageState extends State<LoginPage> {
                                       const Text("The information is invalid"),
                                   autoCloseDuration:
                                       const Duration(seconds: 3));
+                                      strokeWidth: 2;
                             }
-                            Get.to(RatingAndReviewsPage());
+                            Get.to(Main());
                           },
                           style: stylebtn(Colors.black, const Color(0xFFF6B100),
                               20, 30, 15),
