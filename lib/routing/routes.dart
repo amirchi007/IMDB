@@ -10,7 +10,7 @@ routes() => [
       GetPage(
         name: '/login',
         page: () => const Login(),
-        transition: Transition.circularReveal,
+        transition: Transition.fade,
         transitionDuration: const Duration(milliseconds: 500),
       ),
       GetPage(

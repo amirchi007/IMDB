@@ -3,7 +3,11 @@ import 'package:imdb/pages/resource.dart';
 import 'package:imdb/routing/auth/privacy_notice.dart';
 import 'package:imdb/routing/auth/condition_of_use.dart';
 import 'package:imdb/routing/auth/login.dart';
+import 'package:toastification/toastification.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:io';
 
 //Login Page
 class RegisterPage extends StatefulWidget {
@@ -141,7 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Transform.scale(
@@ -169,67 +173,67 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: shadowbtn(),
                       child: ElevatedButton(
                         onPressed: () async {
-                          // if (_SignUpCardcardKey.currentState!.validate()) {
-                          //   http
-                          //       .post(
-                          //         Uri.parse(
-                          //             'http://192.168.43.154/api/register'),
-                          //         headers: {
-                          //           HttpHeaders.contentTypeHeader:
-                          //               'application/json; charset=UTF-8',
-                          //         },
-                          //         body: jsonEncode({
-                          //           'name': SignUpCardName.text,
-                          //           'email': SignUpCardUsername.text,
-                          //           'phone': SignUpCardEmail.text,
-                          //           'password': SignUpCardPassword.text,
-                          //         }),
-                          //       )
-                          //       .then((value) => {
-                          //             if (value.statusCode == 200)
-                          //               {
-                          //                 //email and password is ok
-                          //                 toastification.show(
-                          //                     backgroundColor: Colors.green,
-                          //                     context: context,
-                          //                     title: const Text(
-                          //                         "Signed up successfully"),
-                          //                     autoCloseDuration:
-                          //                         const Duration(seconds: 3)),
-                          //                 Get.to(const Login())
-                          //               }
-                          //             else if (value.statusCode == 409)
-                          //               {
-                          //                 //email and password is not ok
-                          //                 toastification.show(
-                          //                     backgroundColor: Colors.red,
-                          //                     context: context,
-                          //                     title: const Text(
-                          //                         "Account already exists"),
-                          //                     autoCloseDuration:
-                          //                         const Duration(seconds: 3))
-                          //               }
-                          //             else
-                          //               {
-                          //                 //email and password is not ok
-                          //                 toastification.show(
-                          //                     backgroundColor: Colors.red,
-                          //                     context: context,
-                          //                     title: const Text(
-                          //                         "The information is invalid"),
-                          //                     autoCloseDuration:
-                          //                         const Duration(seconds: 3))
-                          //               }
-                          //           })
-                          //       .onError((error, stackTrace) => {});
-                          // } else {
-                          //   //email and password is not ok
-                          //   toastification.show(
-                          //       backgroundColor: Colors.red,
-                          //       context: context,
-                          //       title: const Text("The information is invalid"),
-                          //       autoCloseDuration: const Duration(seconds: 3));
-                          // }
+                          if (_SignUpCardcardKey.currentState!.validate()) {
+                            http
+                                .post(
+                                  Uri.parse(
+                                      'http://192.168.43.154/api/register'),
+                                  headers: {
+                                    HttpHeaders.contentTypeHeader:
+                                        'application/json; charset=UTF-8',
+                                  },
+                                  body: jsonEncode({
+                                    'name': SignUpCardName.text,
+                                    'email': SignUpCardUsername.text,
+                                    'phone': SignUpCardEmail.text,
+                                    'password': SignUpCardPassword.text,
+                                  }),
+                                )
+                                .then((value) => {
+                                      if (value.statusCode == 200)
+                                        {
+                                          //email and password is ok
+                                          toastification.show(
+                                              backgroundColor: Colors.green,
+                                              context: context,
+                                              title: const Text(
+                                                  "Signed up successfully"),
+                                              autoCloseDuration:
+                                                  const Duration(seconds: 3)),
+                                          Get.to(const Login())
+                                        }
+                                      else if (value.statusCode == 409)
+                                        {
+                                          //email and password is not ok
+                                          toastification.show(
+                                              backgroundColor: Colors.red,
+                                              context: context,
+                                              title: const Text(
+                                                  "Account already exists"),
+                                              autoCloseDuration:
+                                                  const Duration(seconds: 3))
+                                        }
+                                      else
+                                        {
+                                          //email and password is not ok
+                                          toastification.show(
+                                              backgroundColor: Colors.red,
+                                              context: context,
+                                              title: const Text(
+                                                  "The information is invalid"),
+                                              autoCloseDuration:
+                                                  const Duration(seconds: 3))
+                                        }
+                                    })
+                                .onError((error, stackTrace) => {});
+                          } else {
+                            //email and password is not ok
+                            toastification.show(
+                                backgroundColor: Colors.red,
+                                context: context,
+                                title: const Text("The information is invalid"),
+                                autoCloseDuration: const Duration(seconds: 3));
+                          }
                         },
                         style: stylebtn(
                             Colors.black, const Color(0xFFF6B100), 0, 30, 15),
@@ -237,47 +241,47 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          width: 160,
-                          decoration: shadowbtn(),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              //sign in with google+
-                            },
-                            style: stylebtn(
-                                Colors.white, Colors.black, 20, 30, 15),
-                            child: const Text("With Google"),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        const Text(
-                          'or',
-                          style: TextStyle(
-                            color: Colors.black,
-                            decoration: TextDecoration.none,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Container(
-                          width: 160,
-                          decoration: shadowbtn(),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              //sign in with facebook
-                            },
-                            style: stylebtn(
-                                Colors.white, Colors.black, 20, 30, 15),
-                            child: const Text("With Facebook"),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 25),
+                    // Row(
+                    //   children: <Widget>[
+                    //     Container(
+                    //       width: 160,
+                    //       decoration: shadowbtn(),
+                    //       child: ElevatedButton(
+                    //         onPressed: () async {
+                    //           //sign in with google+
+                    //         },
+                    //         style: stylebtn(
+                    //             Colors.white, Colors.black, 20, 30, 15),
+                    //         child: const Text("With Google"),
+                    //       ),
+                    //     ),
+                    //     const SizedBox(width: 16),
+                    //     const Text(
+                    //       'or',
+                    //       style: TextStyle(
+                    //         color: Colors.black,
+                    //         decoration: TextDecoration.none,
+                    //         fontFamily: 'Roboto',
+                    //         fontWeight: FontWeight.bold,
+                    //         fontSize: 20,
+                    //       ),
+                    //     ),
+                    //     const SizedBox(width: 16),
+                    //     Container(
+                    //       width: 160,
+                    //       decoration: shadowbtn(),
+                    //       child: ElevatedButton(
+                    //         onPressed: () async {
+                    //           //sign in with facebook
+                    //         },
+                    //         style: stylebtn(
+                    //             Colors.white, Colors.black, 20, 30, 15),
+                    //         child: const Text("With Facebook"),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // const SizedBox(height: 25),
                     linetxt('Already have an Account?'),
                     const SizedBox(height: 25),
                     Container(
