@@ -4,6 +4,7 @@ import 'package:imdb/pages/resource.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfilePage extends StatefulWidget {
   @override
@@ -13,22 +14,6 @@ class UserProfilePage extends StatefulWidget {
 class _UserProfilePageState extends State<UserProfilePage> {
   bool _showChangePassword = false;
   late Future<User> user;
-
-  @override
-  void initState() {
-    super.initState();
-    user = fetchUser();
-  }
-
-  Future<User> fetchUser() async {
-    final response = await http.get(Uri.parse('https://google.com'));
-
-    if (response.statusCode == 200) {
-      return User.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load user');
-    }
-  }
 
   void _toggleChangePassword() {
     setState(() {
@@ -72,6 +57,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 }
+
 class User1 {
   final String name;
   final String email;
@@ -120,13 +106,19 @@ class FavoriteMoviesSection extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           SizedBox(
-            height: 200,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
+            height: 400,
+            width: 400,
+            child: GridView.builder(
+              gridDelegate:const  SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 0.2,
+                mainAxisSpacing: 1,
+                mainAxisExtent: 231
+              ),
               itemCount: 10,
               itemBuilder: (context, index) {
-                return MovieSlider(
-                    'assets/images/unsplash${index + 1}.png', 'Title $index');
+                return MovieCard(
+                    'Title $index', 'assets/images/unsplash${index + 1}.png');
               },
             ),
           ),
@@ -145,21 +137,20 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
-      margin: const EdgeInsets.only(right: 10),
+      margin: const EdgeInsets.all(4.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.asset(imagePath,
-                fit: BoxFit.cover, height: 150, width: 120),
+                fit: BoxFit.none, height: 200, width: 150),
           ),
-          const SizedBox(height: 5),
+          //const SizedBox(height: 3),
           Text(
             title,
             style: const TextStyle(fontSize: 14),
-            overflow: TextOverflow.ellipsis,
+           //overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
@@ -179,7 +170,7 @@ class ChangePasswordButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         child: Text('Change Password'),
-        style: stylebtn(Colors.white, Colors.black, 10, 140, 12),
+        style: stylebtn(Colors.white, Colors.black, 10, 400, 15),
       ),
     );
   }
@@ -304,7 +295,7 @@ class ChangePasswordSection extends StatelessWidget {
           ElevatedButton(
             onPressed: onToggle,
             child: const Text('Change'),
-            style: stylebtn(Colors.white, Colors.black, 10, 169, 12),
+            style: stylebtn(Colors.white, Colors.black, 10, 400, 20),
           ),
         ],
       ),
@@ -324,7 +315,7 @@ class LogoutButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         child: Text('Log out'),
-        style: stylebtn(Colors.white, Colors.black, 10, 170, 11),
+        style: stylebtn(Colors.white, Colors.black, 10, 400, 15),
       ),
     );
   }
@@ -333,21 +324,54 @@ class LogoutButton extends StatelessWidget {
 class User {
   final String name;
   final String email;
-  final String profilePicture;
   final List<String> favorites;
 
-  User(
-      {required this.name,
-      required this.email,
-      required this.profilePicture,
-      required this.favorites});
+  User({required this.name, required this.email, required this.favorites});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       name: json['name'],
       email: json['email'],
-      profilePicture: json['profile_picture'],
       favorites: List<String>.from(json['favorites']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'email': email,
+      'favorites': favorites,
+    };
+  }
+}
+
+Future<void> saveUser(User user) async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setString('name', user.name);
+  prefs.setString('email', user.email);
+  prefs.setStringList('favorites', user.favorites);
+}
+
+Future<User?> loadUser() async {
+  final prefs = await SharedPreferences.getInstance();
+  final name = prefs.getString('name');
+  final email = prefs.getString('email');
+  final favorites = prefs.getStringList('favorites') ?? [];
+
+  if (name != null && email != null) {
+    return User(name: name, email: email, favorites: favorites);
+  }
+  return null;
+}
+
+ButtonStyle stylebtn(Color clr, Color clr2, double rad, double w, double fntsz) {
+  return ElevatedButton.styleFrom(
+    backgroundColor: clr2,
+    foregroundColor: clr,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(rad),
+    ),
+    fixedSize: Size(w, 45),
+    textStyle: TextStyle(fontSize: fntsz),
+  );
 }

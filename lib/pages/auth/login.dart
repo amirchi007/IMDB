@@ -210,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
                                     const Duration(seconds: 3),
                               );
                             }
-                            //Get.to(Main());
+                            Get.to(Main());
                           },
                           style: stylebtn(Colors.black, const Color(0xFFF6B100),
                               20, 30, 15),

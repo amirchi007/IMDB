@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:imdb/pages/main/movie.dart';
 import 'package:imdb/pages/main/profile.dart';
+import 'package:imdb/pages/main/rating.dart';
 
 shadowtxt() {
   return const BoxDecoration(
@@ -211,9 +213,10 @@ List<Widget> imageSliders(String title, String explain) {
                         txtstyle(explain, Colors.white, 10, FontWeight.normal),
                         const SizedBox(height: 5),
                         ElevatedButton(
-                          onPressed: () {},
-                          style: stylebtn(
-                              Colors.black, const Color(0xFFF5C418), 0, 0, 14),
+                          onPressed: () {
+                            Get.to(MoviePage());
+                          },
+                          style: const ButtonStyle(),
                           child: const Text('See More'),
                         ),
                       ],
