@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:imdb/pages/main/movie.dart';
 import 'package:imdb/pages/main/profile.dart';
 import 'package:imdb/pages/main/rating.dart';
+import 'package:imdb/routing/auth/login.dart';
 
 shadowtxt() {
   return const BoxDecoration(
@@ -65,15 +66,25 @@ input(String label, String hinttext) {
   );
 }
 
-txtbtn(String? title, StatelessWidget page) {
+txtbtn(String? title, VoidCallback onPressed) {
   return TextButton(
-    onPressed: () {
-      Get.to(page);
-    },
+    onPressed: onPressed,
     child: Text(
       title!,
       style: const TextStyle(
         color: Colors.grey,
+      ),
+    ),
+  );
+}
+
+txtbtnhome(String? title,  VoidCallback onPressed) {
+  return TextButton(
+ onPressed: onPressed,
+    child: Text(
+      title!,
+      style: const TextStyle(
+        color: Color(0xFFF5C418),
       ),
     ),
   );
@@ -179,54 +190,68 @@ final List<String> imgList = [
 ];
 
 List<Widget> imageSliders(String title, String explain) {
-  return imgList
-      .map((item) => ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-            child: Stack(
-              children: <Widget>[
-                Image.asset(
-                  item,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
+  return imgList.map((item) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+      child: Stack(
+        children: <Widget>[
+          Image.asset(
+            item,
+            fit: BoxFit.cover,
+            width: double.infinity,
+          ),
+          Positioned(
+            bottom: 0.0,
+            left: 0.0,
+            right: 0.0,
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(200, 0, 0, 0),
+                    Color.fromARGB(0, 0, 0, 0),
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
                 ),
-                Positioned(
-                  bottom: 0.0,
-                  left: 0.0,
-                  right: 0.0,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color.fromARGB(200, 0, 0, 0),
-                          Color.fromARGB(0, 0, 0, 0)
-                        ],
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                      ),
-                    ),
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        txtstyle(title, Colors.yellow, 15, FontWeight.bold),
-                        txtstyle(explain, Colors.white, 10, FontWeight.normal),
-                        const SizedBox(height: 5),
-                        ElevatedButton(
-                          onPressed: () {
-                            Get.to(MoviePage());
-                          },
-                          style: const ButtonStyle(),
-                          child: const Text('See More'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                   txtstyle(title, Color(0xFFF5C418), 17, FontWeight.normal),
+                  txtstyle(explain, Colors.white, 10, FontWeight.normal),
+                  //const SizedBox(height: 5),
+                  evaluatedButton('See More', () {
+                    Get.to(MoviePage());
+                  }),
+                ],
+              ),
             ),
-          ))
-      .toList();
+          ),
+        ],
+      ),
+    );
+  }).toList();
+}
+                   
+
+Widget evaluatedButton(String text, VoidCallback onPressed) {
+  return ElevatedButton(
+    onPressed: onPressed,
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Color(0xFFF5C418), 
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5), 
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2), 
+      minimumSize: Size(0, 0)
+    ),
+    child: Text(
+      text,
+      style: const TextStyle(color: Colors.black), 
+    ),
+  );
 }
 
 tags(String title) {

@@ -139,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                               checkbox("Remember Me", 15)
                             ],
                           ),
-                          txtbtn('Forgot Password?', const ForgotPassword()),
+                          txtbtn('Forgot Password?', () => Get.to(const ForgotPassword())),
                         ],
                       ),
                       const SizedBox(height: 50),
@@ -241,8 +241,8 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          txtbtn('Conditions of Use', const ConditionOfUse()),
-                          txtbtn('Privacy Notice', const PrivacyNotice()),
+                          txtbtn('Conditions of Use', () => Get.to(const ConditionOfUse()),),
+                          txtbtn('Privacy Notice',() => Get.to(const PrivacyNotice())),
                         ],
                       )
                     ],

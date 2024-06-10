@@ -275,8 +275,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        txtbtn('Conditions of Use', const ConditionOfUse()),
-                        txtbtn('Privacy Notice', const PrivacyNotice()),
+                        txtbtn('Conditions of Use',() => Get.to(const ConditionOfUse())),
+                        txtbtn('Privacy Notice',() => Get.to(const PrivacyNotice())),
                       ],
                     )
                   ],

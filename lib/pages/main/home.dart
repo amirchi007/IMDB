@@ -1,10 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:imdb/pages/main/movie.dart';
 import 'package:imdb/pages/resource.dart';
-import 'package:imdb/pages/main/profile.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,8 +12,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final CarouselController _controller = CarouselController();
   int _current = 0;
-  String Name = "Shogun";
-  String Explain =
+  String name = "Shogun";
+  String explain =
       'When a mysterious European ship is found marooned in a nearby fishing village, '
       'Lord Yoshi Toranaga discovers secrets that could tip the scales of power and devastate his enemies.';
   @override
@@ -28,7 +26,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             child: CarouselSlider(
-              items: imageSliders(Name, Explain),
+              items: imageSliders(name, explain),
               carouselController: _controller,
               options: CarouselOptions(
                   autoPlay: true,
@@ -97,6 +95,8 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(width: 14),
               txtstyle('Top 10 on IMDb this week', Colors.black, 15,
                   FontWeight.bold),
+              const SizedBox(width: 110),
+              txtbtnhome('See More', () => Get.to(const MoviePage())),
             ],
           ),
           const SizedBox(height: 10),

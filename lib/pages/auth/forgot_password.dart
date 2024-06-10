@@ -85,8 +85,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        txtbtn('Conditions of Use', const ConditionOfUse()),
-                        txtbtn('Privacy Notice', const PrivacyNotice()),
+                        txtbtn('Conditions of Use', () => Get.to(const ConditionOfUse())),
+                        txtbtn('Privacy Notice', () => Get.to(const PrivacyNotice())),
                       ],
                     )
                   ],
