@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:imdb/pages/main/movie.dart';
 import 'package:imdb/pages/main/profile.dart';
 import 'package:imdb/pages/main/rating.dart';
+import 'package:imdb/pages/main/search.dart';
 import 'package:imdb/routing/auth/login.dart';
+import 'package:imdb/routing/main/movie.dart';
 
 shadowtxt() {
   return const BoxDecoration(
@@ -184,19 +186,22 @@ txtstyle(String title, Color color, double fontsize, FontWeight fontWeight) {
 
 //slider show
 final List<String> imgList = [
-  'assets/images/shogun.jpg',
-  'assets/images/shogun.jpg',
-  'assets/images/shogun.jpg',
+  'assets/images/shogun.jpg#nima#When a mysterious European ship is found marooned in a nearby fishing village,',
+  'assets/images/shogun.jpg#amin#When a mysterious European ship is found marooned in a nearby fishing village,',
+  'assets/images/shogun.jpg#ali#When a mysterious European ship is found marooned in a nearby fishing village,',
 ];
 
-List<Widget> imageSliders(String title, String explain) {
+List<Widget> imageSliders() {
   return imgList.map((item) {
+    String images = item.split('#')[0];
+    String title = item.split('#')[1];
+    String explain = item.split('#')[2];
     return ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(5.0)),
       child: Stack(
         children: <Widget>[
           Image.asset(
-            item,
+            images,
             fit: BoxFit.cover,
             width: double.infinity,
           ),
@@ -221,9 +226,8 @@ List<Widget> imageSliders(String title, String explain) {
                 children: [
                    txtstyle(title, Color(0xFFF5C418), 17, FontWeight.normal),
                   txtstyle(explain, Colors.white, 10, FontWeight.normal),
-                  //const SizedBox(height: 5),
                   evaluatedButton('See More', () {
-                    Get.to(MoviePage());
+                    Get.to(const MovieRouting());
                   }),
                 ],
               ),
@@ -244,7 +248,7 @@ Widget evaluatedButton(String text, VoidCallback onPressed) {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5), 
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2), 
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5), 
       minimumSize: Size(0, 0)
     ),
     child: Text(
@@ -268,7 +272,7 @@ tags(String title) {
 Widget MovieSlider(String imagePath, String title) {
   return InkWell(
     onTap: () {
-      // Get.to(UserProfilePage());
+      Get.to(const MovieRouting());
     },
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 7.0),

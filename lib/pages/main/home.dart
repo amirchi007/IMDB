@@ -12,10 +12,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final CarouselController _controller = CarouselController();
   int _current = 0;
-  String name = "Shogun";
-  String explain =
-      'When a mysterious European ship is found marooned in a nearby fishing village, '
-      'Lord Yoshi Toranaga discovers secrets that could tip the scales of power and devastate his enemies.';
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -26,7 +22,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             child: CarouselSlider(
-              items: imageSliders(name, explain),
+              items: imageSliders(),
               carouselController: _controller,
               options: CarouselOptions(
                   autoPlay: true,
@@ -50,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                   topRight: Radius.circular(8.0),
                 ),
                 child: Image.asset(
-                  "assets/images/intro.png",
+                  "assets/images/thebestof.jpg",
                   height: 150,
                 ),
               ),

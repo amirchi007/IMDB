@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:imdb/pages/resource.dart';
+import 'package:imdb/pages/main/movie.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:imdb/routing/main/movie.dart';
 
 class Movie {
   final String title;
@@ -122,8 +125,8 @@ class _SearchPageState extends State<SearchPage> {
             minRating: 1,
             direction: Axis.horizontal,
             allowHalfRating: true,
-            itemCount: 5,
-            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+            itemCount: 10,
+            itemSize: 28,
             itemBuilder: (context, _) => const Icon(
               Icons.star,
               color: Colors.amber,
@@ -134,7 +137,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Submit'),
+              child: txtstyle('Submit',const Color.fromARGB(255, 94, 94, 94),18,FontWeight.normal),
               onPressed: () {
                 setState(() {
                   movie.userRating = userRating;
@@ -186,29 +189,12 @@ class _SearchPageState extends State<SearchPage> {
                   decoration: InputDecoration(
                     hintText: "Search...",
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Color.fromARGB(255, 255, 255, 255)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 70, 69, 69),
-                        width: 2,
-                      ),
                       borderRadius: BorderRadius.circular(15),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.red,
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Colors.red,
-                        width: 1,
-                      ),
+                      borderSide: const BorderSide(color: Color.fromARGB(255, 255, 255, 255)),
                     ),
                     suffixIcon: Padding(
                       padding: const EdgeInsets.only(right: 8),
@@ -237,56 +223,61 @@ class _SearchPageState extends State<SearchPage> {
               itemCount: filteredMovies.length,
               itemBuilder: (context, index) {
                 final movie = filteredMovies[index];
-                return ListTile(
-                  leading: Image.asset(movie.imageUrl,
-                      width: 50, height: 50, fit: BoxFit.cover),
-                      
-                  title: Text(movie.title),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${movie.year}    ${movie.duration}',
-                        style: const TextStyle(
-                            fontSize: 13,
-                            fontFamily: 'Roboto',
-                            color: Colors.grey),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            '${movie.rating}',
-                            style: const TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'Roboto',
-                                color: Color.fromARGB(255, 255, 152, 17)),
-                          ),
-                          const Icon(
-                            Icons.star,
-                            color: Color.fromARGB(255, 255, 152, 17),
-                            size: 15,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Your rating: ${movie.userRating}',
-                            style: const TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Roboto',
-                                color: Colors.grey),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.rate_review,
-                                 color: Color.fromARGB(255, 255, 152, 17)),
-                            onPressed: () => showRatingDialog(movie),
-                          ),
-                          const SizedBox(
-                            height: 0,
-                            width: 80,
-                          ),
-                          const Icon(Icons.movie),
-                        ],
-                      ),
-                    ],
+                return InkWell(
+                  onTap: () {
+                    Get.to(const MovieRouting());
+                  },
+                  child: ListTile(
+                    leading: Image.asset(movie.imageUrl,
+                        width: 50, height: 50, fit: BoxFit.cover),
+                        
+                    title: Text(movie.title),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${movie.year}    ${movie.duration}',
+                          style: const TextStyle(
+                              fontSize: 13,
+                              fontFamily: 'Roboto',
+                              color: Colors.grey),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              '${movie.rating}',
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Roboto',
+                                  color: Color.fromARGB(255, 255, 152, 17)),
+                            ),
+                            const Icon(
+                              Icons.star,
+                              color: Color.fromARGB(255, 255, 152, 17),
+                              size: 15,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Your rating: ${movie.userRating}',
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Roboto',
+                                  color: Colors.grey),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.rate_review,
+                                   color: Color.fromARGB(255, 255, 152, 17)),
+                              onPressed: () => showRatingDialog(movie),
+                            ),
+                            const SizedBox(
+                              height: 0,
+                              width: 80,
+                            ),
+                            const Icon(Icons.movie),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

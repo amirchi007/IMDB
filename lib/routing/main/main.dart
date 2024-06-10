@@ -3,6 +3,7 @@ import 'package:imdb/pages/appbar/main.dart';
 import 'package:imdb/pages/main/home.dart';
 import 'package:imdb/pages/main/profile.dart';
 import 'package:imdb/pages/main/search.dart';
+import 'package:imdb/pages/main/rating.dart';
 
 int currentPageIndex = 0;
 
@@ -51,7 +52,7 @@ class _MainState extends State<Main> {
       ),
       body: <Widget>[
         HomePage(),
-        const SearchPage(),
+         RatingAndReviewsPage(),
         UserProfilePage(),
       ][currentPageIndex],
     );
