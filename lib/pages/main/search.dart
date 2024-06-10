@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:imdb/pages/resource.dart';
+import 'package:imdb/pages/resource/resource.dart';
 import 'package:imdb/pages/main/movie.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -260,7 +260,7 @@ class _SearchPageState extends State<SearchPage> {
                             Text(
                               'Your rating: ${movie.userRating}',
                               style: const TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   fontFamily: 'Roboto',
                                   color: Colors.grey),
                             ),
@@ -270,7 +270,7 @@ class _SearchPageState extends State<SearchPage> {
                               onPressed: () => showRatingDialog(movie),
                             ),
                             const SizedBox(
-                              height: 0,
+                              
                               width: 80,
                             ),
                             const Icon(Icons.movie),

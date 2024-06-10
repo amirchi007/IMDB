@@ -52,7 +52,8 @@ class _MainState extends State<Main> {
       ),
       body: <Widget>[
         HomePage(),
-         RatingAndReviewsPage(),
+         SearchPage(),
+         //RatingAndReviewsPage()
         UserProfilePage(),
       ][currentPageIndex],
     );

@@ -1,5 +1,61 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:imdb/pages/resource/resource.dart';
+
+double _rating = 0.0;
+final TextEditingController _reviewController = TextEditingController();
+final List<Map<String, dynamic>> _reviews = [
+  {
+    'username': '@EpicStoryLover',
+    'review':
+        'The character development in Shogun is phenomenal. I was hooked from the first scene!',
+    'rating': 9.0,
+    'profilePic': _getRandomProfilePicUrl(),
+  },
+  {
+    'username': '@CinemaNinja',
+    'review':
+        'The battle scenes were incredibly choreographed. Felt like I was transported back in time!',
+    'rating': 8.5,
+    'profilePic': _getRandomProfilePicUrl(),
+  },
+  {
+    'username': '@PeriodDramaQueen',
+    'review':
+        'The costumes and sets in Shogun are so detailed. It\'s like a visual feast!',
+    'rating': 9.5,
+    'profilePic':_getRandomProfilePicUrl(),
+  },
+  {
+    'username': '@FilmScoreFanatic',
+    'review':
+        'The score of Shogun is hauntingly beautiful. It really elevates the whole experience.',
+    'rating': 8.0,
+    'profilePic': _getRandomProfilePicUrl(),
+  },
+  {
+    'username': '@HistoryInReels',
+    'review':
+        'Shogun doesn\'t just tell a story, it immerses you in a different era. Absolutely stunning!',
+    'rating': 9.0,
+    'profilePic': '_getRandomProfilePicUrl()',
+  },
+  {
+    'username': '@MovieBuffMark',
+    'review':
+        'I appreciated the attention to cultural accuracy in Shogun. It\'s refreshing to see such respect for the source material.',
+    'rating': 8.8,
+    'profilePic':_getRandomProfilePicUrl(),
+  },
+  {
+    'username': '@Ehsanghasemi',
+    'review':
+        'After watching this movie, I was impressed and decided to teach the \'Kyudo\' method to my students at the best university in Iran (Shamsipur).',
+    'rating': 9.5,
+    'profilePic': _getRandomProfilePicUrl(),
+  },
+];
 
 class RatingAndReviewsPage extends StatefulWidget {
   @override
@@ -7,60 +63,6 @@ class RatingAndReviewsPage extends StatefulWidget {
 }
 
 class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
-  double _rating = 0.0;
-  final TextEditingController _reviewController = TextEditingController();
-  final List<Map<String, dynamic>> _reviews = [
-    {
-      'username': '@EpicStoryLover',
-      'review':
-          'The character development in Shogun is phenomenal. I was hooked from the first scene!',
-      'rating': 9.0,
-      'profilePic': 'https://via.placeholder.com/150',
-    },
-    {
-      'username': '@CinemaNinja',
-      'review':
-          'The battle scenes were incredibly choreographed. Felt like I was transported back in time!',
-      'rating': 8.5,
-      'profilePic': 'https://via.placeholder.com/150',
-    },
-    {
-      'username': '@PeriodDramaQueen',
-      'review':
-          'The costumes and sets in Shogun are so detailed. It\'s like a visual feast!',
-      'rating': 9.5,
-      'profilePic': 'https://via.placeholder.com/150',
-    },
-    {
-      'username': '@FilmScoreFanatic',
-      'review':
-          'The score of Shogun is hauntingly beautiful. It really elevates the whole experience.',
-      'rating': 8.0,
-      'profilePic': 'https://via.placeholder.com/150',
-    },
-    {
-      'username': '@HistoryInReels',
-      'review':
-          'Shogun doesn\'t just tell a story, it immerses you in a different era. Absolutely stunning!',
-      'rating': 9.0,
-      'profilePic': 'https://via.placeholder.com/150',
-    },
-    {
-      'username': '@MovieBuffMark',
-      'review':
-          'I appreciated the attention to cultural accuracy in Shogun. It\'s refreshing to see such respect for the source material.',
-      'rating': 8.8,
-      'profilePic': 'https://via.placeholder.com/150',
-    },
-    {
-      'username': '@Ehsanghasemi',
-      'review':
-          'After watching this movie, I was impressed and decided to teach the \'Kyudo\' method to my students at the best university in Iran (Shamsipur).',
-      'rating': 9.5,
-      'profilePic': 'https://via.placeholder.com/150',
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,44 +95,50 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
                     ],
                   ),
                   Column(
-                    children: List.generate(5, (index) {
-                      int stars = 5 - index;
-                      double yellowPercentage =
-                          [0.9, 0.7, 0.6, 0.2, 0.1][index];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: Row(
-                          children: [
-                            Row(
-                              children: List.generate(
-                                  stars,
-                                  (_) => const Icon(Icons.star,
-                                      size: 12, color: Colors.black)),
-                            ),
-                            const SizedBox(width: 4),
-                            SizedBox(
-                              width: 120, // Fixed width for the bars
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    height: 4,
-                                    color: Colors.grey[300],
+                      children: List.generate(5, (index) {
+                    int stars = 5 - index;
+                    double yellowPercentage = [0.9, 0.7, 0.6, 0.2, 0.1][index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: Row(
+                        children: [
+                          Row(
+                            textDirection: TextDirection.rtl,
+                            children: List.generate(
+                                5,
+                                (i) => Icon(
+                                      i < stars
+                                          ? Icons.star
+                                          : Icons.star_border,
+                                      size: 18,
+                                      color: i < stars
+                                          ? Colors.black
+                                          : Colors.transparent,
+                                    )),
+                          ),
+                          const SizedBox(width: 4),
+                          SizedBox(
+                            width: 120, // Fixed width for the bars
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: 10,
+                                  color: Colors.grey[300],
+                                ),
+                                FractionallySizedBox(
+                                  widthFactor: yellowPercentage,
+                                  child: Container(
+                                    height: 10,
+                                    color: Colors.amber,
                                   ),
-                                  FractionallySizedBox(
-                                    widthFactor: yellowPercentage,
-                                    child: Container(
-                                      height: 4,
-                                      color: Colors.amber,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
+                          ),
+                        ],
+                      ),
+                    );
+                  })),
                 ],
               ),
               const SizedBox(height: 16),
@@ -174,25 +182,25 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
                 controller: _reviewController,
                 maxLines: 3,
                 decoration: InputDecoration(
-                  prefixIcon: const Row(
+                  prefixIcon:  Row(
                     mainAxisSize: MainAxisSize.min,
-                    children:  [
+                    children: [
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: CircleAvatar(
                           backgroundImage:
-                              NetworkImage('https://via.placeholder.com/150'),
+                              NetworkImage(_getRandomProfilePicUrl()),
                         ),
                       ),
-                      SizedBox(width: 8),
-                      Text('@UserName:', style: TextStyle(color: Colors.black)),
+                      const SizedBox(width: 8),
+                      const Text('@UserName:', style: TextStyle(color: Colors.black)),
                     ],
                   ),
                   hintText: 'Write a review...',
-                  hintStyle:const  TextStyle(color: Colors.amber),
+                  hintStyle: const TextStyle(color: Colors.amber),
                   border: const OutlineInputBorder(),
                   contentPadding:
-                     const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(color: Colors.amber),
@@ -216,7 +224,7 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
                           'username': '@User Name',
                           'review': _reviewController.text,
                           'rating': _rating,
-                          'profilePic': 'https://via.placeholder.com/150',
+                          'profilePic': _getRandomProfilePicUrl(),
                         });
                         _reviewController.clear();
                       });
@@ -266,14 +274,14 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(review['username'],
-                                    style:
-                                        const TextStyle(fontWeight: FontWeight.bold)),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold)),
                                 const SizedBox(height: 4),
                                 Text(review['review']),
                                 const SizedBox(height: 8),
                                 RatingBarIndicator(
-                                  rating: review['rating'] / 2,
-                                  itemBuilder: (context, index) =>const Icon(
+                                  rating: review['rating'] ,
+                                  itemBuilder: (context, index) => const Icon(
                                     Icons.star,
                                     color: Colors.amber,
                                   ),
@@ -295,58 +303,8 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
     );
   }
 }
-
-class RatingDialog extends StatefulWidget {
-  final double initialRating;
-  const RatingDialog({required this.initialRating});
-
-  @override
-  _RatingDialogState createState() => _RatingDialogState();
-}
-
-class _RatingDialogState extends State<RatingDialog> {
-  late double _rating;
-
-  @override
-  void initState() {
-    super.initState();
-    _rating = widget.initialRating;
+  String _getRandomProfilePicUrl() {
+    final random = Random();
+    final randomNumber = random.nextInt(1000); // Generating a random number
+    return 'https://randomuser.me/api/portraits/men/$randomNumber.jpg'; // Example URL
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Rate the Movie'),
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(5, (index) {
-          return IconButton(
-            icon: Icon(
-              index < _rating ? Icons.star : Icons.star_border,
-              color: Colors.amber,
-            ),
-            onPressed: () {
-              setState(() {
-                _rating = index + 1.0;
-              });
-            },
-          );
-        }),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: const Text('Cancel'),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop(_rating);
-          },
-          child: const Text('Submit'),
-        ),
-      ],
-    );
-  }
-}

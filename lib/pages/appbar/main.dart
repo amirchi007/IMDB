@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imdb/routing/main/main.dart';
-import 'package:imdb/pages/resource.dart';
+import 'package:imdb/pages/resource/resource.dart';
 import 'package:imdb/routing/main/profile.dart';
 import 'package:get/get.dart';
 

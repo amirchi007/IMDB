@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imdb/pages/main/rating.dart';
-import 'package:imdb/pages/resource.dart';
+import 'package:imdb/pages/resource/resource.dart';
 import 'package:imdb/routing/auth/condition_of_use.dart';
 import 'package:imdb/routing/auth/privacy_notice.dart';
 import 'package:imdb/routing/auth/forgot_password.dart';

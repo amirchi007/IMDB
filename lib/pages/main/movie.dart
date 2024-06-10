@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:imdb/pages/resource.dart';
+import 'package:imdb/pages/main/rating.dart';
+import 'package:imdb/pages/resource/resource.dart';
+import 'package:imdb/routing/auth/login.dart';
+import 'package:get/get.dart';
+import 'package:imdb/routing/main/rating.dart';
 
 class MoviePage extends StatefulWidget {
   const MoviePage({super.key});
@@ -123,10 +127,13 @@ class _MoviePageState extends State<MoviePage> {
               label: txtstyle("Favorite", Colors.black, 15, FontWeight.normal),
               style:
                   stylebtn(Colors.black, const Color(0xFFF6B100), 20, 45, 10),
+                  
             ),
             const SizedBox(width: 20),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(RatingRouting());
+              },
               icon: const Icon(
                 Icons.star,
                 color: Colors.black,

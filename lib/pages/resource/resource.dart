@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:math';
 import 'package:imdb/pages/main/movie.dart';
 import 'package:imdb/pages/main/profile.dart';
 import 'package:imdb/pages/main/rating.dart';
@@ -106,7 +107,7 @@ shadowbtn() {
 }
 
 stylebtn(Color foregroundColor, Color backgroundColor, double vertical,
-    double horizontal, double fontsize) {
+    double horizontal, double fontsize,) {
   return ElevatedButton.styleFrom(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     foregroundColor: foregroundColor,
@@ -117,6 +118,22 @@ stylebtn(Color foregroundColor, Color backgroundColor, double vertical,
     ),
   );
 }
+
+stylebtnn(Color foregroundColor, Color backgroundColor, double vertical,
+    double horizontal, double fontsize,VoidCallback onPressed) {
+  return  
+  ElevatedButton.styleFrom(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    foregroundColor: foregroundColor,
+    backgroundColor: backgroundColor,
+    padding: EdgeInsets.symmetric(vertical: (vertical), horizontal: horizontal),
+    textStyle: TextStyle(
+      fontSize: fontsize,
+    ),
+  );
+}
+
+
 
 SizedBoxE(String imagePath, String title) {
   return InkWell(
@@ -377,4 +394,61 @@ moviedetails(String head, String sub, double width) {
       ],
     ),
   );
+}
+
+class RatingDialog extends StatefulWidget {
+  final double initialRating;
+  const RatingDialog({required this.initialRating});
+
+  @override
+  _RatingDialogState createState() => _RatingDialogState();
+}
+
+
+
+class _RatingDialogState extends State<RatingDialog> {
+  late double _rating;
+
+  @override
+  void initState() {
+    super.initState();
+    _rating = widget.initialRating;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Rate the Movie'),
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(5, (index) {
+          return IconButton(
+            icon: Icon(
+              index < _rating ? Icons.star : Icons.star_border,
+              color: Colors.amber,
+            ),
+            onPressed: () {
+              setState(() {
+                _rating = index + 1.0;
+              });
+            },
+          );
+        }),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(_rating);
+          },
+          child: const Text('Submit'),
+        ),
+      ],
+    );
+  }
 }

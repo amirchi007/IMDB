@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imdb/pages/resource.dart';
+import 'package:imdb/pages/resource/resource.dart';
 
 class AuthAppbarPage extends StatelessWidget implements PreferredSizeWidget {
   const AuthAppbarPage({super.key});
