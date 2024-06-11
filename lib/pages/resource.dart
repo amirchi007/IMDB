@@ -270,12 +270,15 @@ Widget evaluatedButton(String text, VoidCallback onPressed) {
 }
 
 tags(String title) {
-  return Chip(
-    label: Text(title),
-    backgroundColor: const Color.fromARGB(255, 241, 240, 240),
-    labelPadding: const EdgeInsets.symmetric(horizontal: 8),
-    labelStyle: const TextStyle(
-        fontSize: 15, fontFamily: 'Roboto', fontWeight: FontWeight.bold),
+  return InkWell(
+    onTap: () {},
+    child: Chip(
+      label: Text(title),
+      backgroundColor: const Color.fromARGB(255, 241, 240, 240),
+      labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+      labelStyle: const TextStyle(
+          fontSize: 15, fontFamily: 'Roboto', fontWeight: FontWeight.bold),
+    ),
   );
 }
 
@@ -411,9 +414,8 @@ class _RatingDialogState extends State<RatingDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Rate the Movie'),
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(5, (index) {
+      content: Wrap(
+        children: List.generate(10, (index) {
           return IconButton(
             icon: Icon(
               index < _rating ? Icons.star : Icons.star_border,
@@ -432,13 +434,13 @@ class _RatingDialogState extends State<RatingDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('Cancel'),
+          child: txtstyle("Cancel", Colors.black, 15, FontWeight.w700),
         ),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop(_rating);
           },
-          child: const Text('Submit'),
+          child: txtstyle("Submit", Colors.black, 15, FontWeight.w700),
         ),
       ],
     );

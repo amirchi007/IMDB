@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imdb/pages/resource/resource.dart';
+import 'package:imdb/pages/resource.dart';
 
 class RateAppbarPage extends StatelessWidget implements PreferredSizeWidget {
   const RateAppbarPage({super.key});

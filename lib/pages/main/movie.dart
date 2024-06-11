@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imdb/pages/resource/resource.dart';
+import 'package:imdb/pages/resource.dart';
 import 'package:get/get.dart';
 import 'package:imdb/routing/main/rating.dart';
 
@@ -22,11 +22,11 @@ class _MoviePageState extends State<MoviePage> {
               "assets/images/shogun.jpg",
               fit: BoxFit.cover,
               width: double.infinity,
-              height: 200,
+              height: 300,
             ),
             Container(
               width: double.infinity,
-              height: 200,
+              height: 300,
               color: Colors.black26,
             ),
             Positioned(
@@ -124,8 +124,7 @@ class _MoviePageState extends State<MoviePage> {
               ),
               label: txtstyle("Favorite", Colors.black, 15, FontWeight.normal),
               style:
-                  stylebtn(Colors.black, const Color(0xFFF6B100), 20, 45, 10),
-                  
+                  stylebtn(Colors.black, const Color(0xFFF6B100), 15, 50, 10),
             ),
             const SizedBox(width: 20),
             ElevatedButton.icon(
@@ -139,11 +138,22 @@ class _MoviePageState extends State<MoviePage> {
               ),
               label: txtstyle("Rating", Colors.black, 15, FontWeight.normal),
               style:
-                  stylebtn(Colors.black, const Color(0xFFF6B100), 20, 45, 10),
+                  stylebtn(Colors.black, const Color(0xFFF6B100), 15, 50, 10),
             ),
           ],
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 30),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 17),
+          height: 150,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              return MovieSlider('assets/images/banner${index + 1}.png', '');
+            },
+          ),
+        ),
       ],
     );
   }

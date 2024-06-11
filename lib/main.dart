@@ -23,7 +23,8 @@ class IMDBApp extends StatelessWidget {
         ),
       ),
       title: 'IMDB',
-      initialRoute: '/login',
+      // initialRoute: '/login',
+      initialRoute: '/main',
       getPages: routes(),
     );
   }

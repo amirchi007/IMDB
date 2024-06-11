@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:imdb/pages/resource/resource.dart';
+import 'package:imdb/pages/resource.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:imdb/routing/main/movie.dart';
+import 'package:imdb/routing/main/filter.dart';
 
 class Movie {
   final String title;
@@ -41,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
         year: '1994',
         duration: '2h 22m',
         rating: 9.3,
-        imageUrl: 'assets/images/1.png'),
+        imageUrl: 'assets/images/thebestof.jpg'),
     Movie(
         title: 'The Godfather',
         year: '1972',
@@ -136,7 +137,8 @@ class _SearchPageState extends State<SearchPage> {
           ),
           actions: <Widget>[
             TextButton(
-              child: txtstyle('Submit',const Color.fromARGB(255, 94, 94, 94),18,FontWeight.normal),
+              child: txtstyle('Submit', const Color.fromARGB(255, 94, 94, 94),
+                  18, FontWeight.normal),
               onPressed: () {
                 setState(() {
                   movie.userRating = userRating;
@@ -153,137 +155,141 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Form(
-              key: _searchkey,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                width: screenWidth * 0.7,
-                height: 50,
-                child: TextFormField(
-                  controller: search,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please Enter Some Text";
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Search...",
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color.fromARGB(255, 255, 255, 255)),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: const BorderSide(color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.search),
-                        color: const Color(0xFFF5C418),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Form(
+                key: _searchkey,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  width: screenWidth * 0.7,
+                  height: 50,
+                  child: TextFormField(
+                    controller: search,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please Enter Some Text";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Search...",
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.search),
+                          color: const Color(0xFFF5C418),
+                        ),
                       ),
                     ),
+                    onChanged: filterMovies,
                   ),
-                  onChanged: filterMovies,
                 ),
               ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.filter_list),
-            )
-          ],
-        ),
-        const SizedBox(height: 20),
-        SizedBox(
-          height: screenHeight * 0.65,
-          child: Expanded(
-            child: ListView.builder(
-              itemCount: filteredMovies.length,
-              itemBuilder: (context, index) {
-                final movie = filteredMovies[index];
-                return InkWell(
-                  onTap: () {
-                    Get.to(const MovieRouting());
-                  },
-                  child: ListTile(
-                    leading: Image.asset(movie.imageUrl,
-                        width: 50, height: 50, fit: BoxFit.cover),
-                        
-                    title: Text(movie.title),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${movie.year}    ${movie.duration}',
-                          style: const TextStyle(
-                              fontSize: 13,
-                              fontFamily: 'Roboto',
-                              color: Colors.grey),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              '${movie.rating}',
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'Roboto',
-                                  color: Color.fromARGB(255, 255, 152, 17)),
-                            ),
-                            const Icon(
-                              Icons.star,
-                              color: Color.fromARGB(255, 255, 152, 17),
-                              size: 15,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              'Your rating: ${movie.userRating}',
-                              style: const TextStyle(
-                                  fontSize: 12,
-                                  fontFamily: 'Roboto',
-                                  color: Colors.grey),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.rate_review,
-                                   color: Color.fromARGB(255, 255, 152, 17)),
-                              onPressed: () => showRatingDialog(movie),
-                            ),
-                            const SizedBox(
-                              
-                              width: 80,
-                            ),
-                            const Icon(Icons.movie),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
+              IconButton(
+                onPressed: () {
+                  Get.to(const Filter());
+                },
+                icon: const Icon(Icons.filter_list),
+              )
+            ],
           ),
-        )
-      ],
+          const SizedBox(height: 20),
+          SizedBox(
+            height: screenHeight * 0.65,
+            child: Expanded(
+              child: ListView.builder(
+                itemCount: filteredMovies.length,
+                itemBuilder: (context, index) {
+                  final movie = filteredMovies[index];
+                  return InkWell(
+                    onTap: () {
+                      Get.to(const MovieRouting());
+                    },
+                    child: ListTile(
+                      leading: Image.asset(movie.imageUrl,
+                          width: 50, height: 50, fit: BoxFit.cover),
+                      title: Text(movie.title),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${movie.year}    ${movie.duration}',
+                            style: const TextStyle(
+                                fontSize: 13,
+                                fontFamily: 'Roboto',
+                                color: Colors.grey),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                '${movie.rating}',
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: 'Roboto',
+                                    color: Color.fromARGB(255, 255, 152, 17)),
+                              ),
+                              const Icon(
+                                Icons.star,
+                                color: Color.fromARGB(255, 255, 152, 17),
+                                size: 15,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Your rating: ${movie.userRating}',
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: 'Roboto',
+                                    color: Colors.grey),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.rate_review,
+                                    color: Color.fromARGB(255, 255, 152, 17)),
+                                onPressed: () => showRatingDialog(movie),
+                              ),
+                              const SizedBox(
+                                width: 80,
+                              ),
+                              const Icon(Icons.movie),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

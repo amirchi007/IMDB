@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imdb/pages/resource/resource.dart';
+import 'package:imdb/pages/resource.dart';
 import 'package:imdb/routing/auth/condition_of_use.dart';
 import 'package:imdb/routing/auth/privacy_notice.dart';
 import 'package:imdb/routing/auth/forgot_password.dart';
@@ -147,7 +147,9 @@ class _LoginPageState extends State<LoginPage> {
                         width: double.infinity,
                         decoration: shadowbtn(),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(const Main());
+                          },
                           // onPressed: isLoading
                           //     ? null
                           //     : () async {

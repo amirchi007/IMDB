@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:imdb/pages/resource/resource.dart';
+import 'package:imdb/pages/resource.dart';
 
 double _rating = 0.0;
 final TextEditingController _reviewController = TextEditingController();
@@ -11,49 +11,49 @@ final List<Map<String, dynamic>> _reviews = [
     'review':
         'The character development in Shogun is phenomenal. I was hooked from the first scene!',
     'rating': 9.0,
-    'profilePic': _getRandomProfilePicUrl(),
+    'profilePic': 'assets/images/profile.png',
   },
   {
     'username': '@CinemaNinja',
     'review':
         'The battle scenes were incredibly choreographed. Felt like I was transported back in time!',
     'rating': 8.5,
-    'profilePic': _getRandomProfilePicUrl(),
+    'profilePic': 'assets/images/profile.png',
   },
   {
     'username': '@PeriodDramaQueen',
     'review':
         'The costumes and sets in Shogun are so detailed. It\'s like a visual feast!',
     'rating': 9.5,
-    'profilePic':_getRandomProfilePicUrl(),
+    'profilePic': 'assets/images/profile.png',
   },
   {
     'username': '@FilmScoreFanatic',
     'review':
         'The score of Shogun is hauntingly beautiful. It really elevates the whole experience.',
     'rating': 8.0,
-    'profilePic': _getRandomProfilePicUrl(),
+    'profilePic': 'assets/images/profile.png',
   },
   {
     'username': '@HistoryInReels',
     'review':
         'Shogun doesn\'t just tell a story, it immerses you in a different era. Absolutely stunning!',
     'rating': 9.0,
-    'profilePic': '_getRandomProfilePicUrl()',
+    'profilePic': 'assets/images/profile.png',
   },
   {
     'username': '@MovieBuffMark',
     'review':
         'I appreciated the attention to cultural accuracy in Shogun. It\'s refreshing to see such respect for the source material.',
     'rating': 8.8,
-    'profilePic':_getRandomProfilePicUrl(),
+    'profilePic': 'assets/images/profile.png',
   },
   {
     'username': '@Ehsanghasemi',
     'review':
         'After watching this movie, I was impressed and decided to teach the \'Kyudo\' method to my students at the best university in Iran (Shamsipur).',
     'rating': 9.5,
-    'profilePic': _getRandomProfilePicUrl(),
+    'profilePic': 'assets/images/profile.png',
   },
 ];
 
@@ -75,23 +75,13 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Rating',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold,
-                          )),
-                      Icon(Icons.star, color: Colors.amber, size: 18),
-                      SizedBox(width: 4),
-                      Text('9.2 (IMDb)',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold,
-                          )),
+                      txtstyle('Rating', Colors.black, 18, FontWeight.bold),
+                      const Icon(Icons.star, color: Colors.amber, size: 18),
+                      const SizedBox(width: 4),
+                      txtstyle('9.2 (IMDb)', Colors.black, 18, FontWeight.bold),
                     ],
                   ),
                   Column(
@@ -145,12 +135,7 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Tap to rate:',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.bold,
-                      )),
+                  txtstyle('Tap to rate:', Colors.black, 18, FontWeight.bold),
                   GestureDetector(
                     onTap: () async {
                       final double? rating = await showDialog(
@@ -166,11 +151,11 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
                       }
                     },
                     child: Row(
-                      children: List.generate(5, (index) {
+                      children: List.generate(10, (index) {
                         return Icon(
                           index < _rating ? Icons.star : Icons.star_border,
                           color: Colors.amber,
-                          size: 32,
+                          size: 25,
                         );
                       }),
                     ),
@@ -182,22 +167,24 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
                 controller: _reviewController,
                 maxLines: 3,
                 decoration: InputDecoration(
-                  prefixIcon:  Row(
+                  prefixIcon: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 10.0),
                         child: CircleAvatar(
                           backgroundImage:
-                              NetworkImage(_getRandomProfilePicUrl()),
+                              AssetImage("assets/images/profile.png"),
                         ),
                       ),
                       const SizedBox(width: 8),
-                      const Text('@UserName:', style: TextStyle(color: Colors.black)),
+                      txtstyle(
+                          '@UserName', Colors.black, 14, FontWeight.normal),
                     ],
                   ),
                   hintText: 'Write a review...',
-                  hintStyle: const TextStyle(color: Colors.amber),
+                  hintStyle: const TextStyle(color: Colors.black),
                   border: const OutlineInputBorder(),
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -207,7 +194,7 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
                   ),
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.amber,
+                      color: Colors.black,
                       width: 2,
                     ),
                   ),
@@ -224,7 +211,7 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
                           'username': '@User Name',
                           'review': _reviewController.text,
                           'rating': _rating,
-                          'profilePic': _getRandomProfilePicUrl(),
+                          'profilePic': 'assets/images/profile.png',
                         });
                         _reviewController.clear();
                       });
@@ -280,7 +267,7 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
                                 Text(review['review']),
                                 const SizedBox(height: 8),
                                 RatingBarIndicator(
-                                  rating: review['rating'] ,
+                                  rating: review['rating'],
                                   itemBuilder: (context, index) => const Icon(
                                     Icons.star,
                                     color: Colors.amber,
@@ -303,8 +290,3 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
     );
   }
 }
-  String _getRandomProfilePicUrl() {
-    final random = Random();
-    final randomNumber = random.nextInt(1000); // Generating a random number
-    return 'https://randomuser.me/api/portraits/men/$randomNumber.jpg'; // Example URL
-  }
