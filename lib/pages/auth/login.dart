@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:imdb/pages/main/rating.dart';
 import 'package:imdb/pages/resource/resource.dart';
 import 'package:imdb/routing/auth/condition_of_use.dart';
 import 'package:imdb/routing/auth/privacy_notice.dart';
@@ -139,7 +138,8 @@ class _LoginPageState extends State<LoginPage> {
                               checkbox("Remember Me", 15)
                             ],
                           ),
-                          txtbtn('Forgot Password?', () => Get.to(const ForgotPassword())),
+                          txtbtn('Forgot Password?',
+                              () => Get.to(const ForgotPassword())),
                         ],
                       ),
                       const SizedBox(height: 50),
@@ -147,77 +147,79 @@ class _LoginPageState extends State<LoginPage> {
                         width: double.infinity,
                         decoration: shadowbtn(),
                         child: ElevatedButton(
-                          onPressed: isLoading ? null : () async {
-                            if (_logincardKey.currentState!.validate()) {
-                              setState(() {
-                                isLoading = true;
-                              });
+                          onPressed: () {},
+                          // onPressed: isLoading
+                          //     ? null
+                          //     : () async {
+                          //         if (_logincardKey.currentState!.validate()) {
+                          //           setState(() {
+                          //             isLoading = true;
+                          //           });
 
-                              try {
-                                final response = await http.post(
-                                  Uri.parse('http://192.168.43.154/api/login'),
-                                  headers: {
-                                    HttpHeaders.contentTypeHeader:
-                                        'application/json; charset=UTF-8',
-                                  },
-                                  body: jsonEncode({
-                                    'username': loginUsername.text,
-                                    'password': loginPassword.text,
-                                  }),
-                                );
+                          //           try {
+                          //             final response = await http.post(
+                          //               Uri.parse(
+                          //                   'http://192.168.43.154/api/login'),
+                          //               headers: {
+                          //                 HttpHeaders.contentTypeHeader:
+                          //                     'application/json; charset=UTF-8',
+                          //               },
+                          //               body: jsonEncode({
+                          //                 'username': loginUsername.text,
+                          //                 'password': loginPassword.text,
+                          //               }),
+                          //             );
 
-                                if (response.statusCode == 200) {
-                                  toastification.show(
-                                    backgroundColor: Colors.green,
-                                    context: context,
-                                    title:
-                                        const Text("Login successfully"),
-                                    autoCloseDuration:
-                                        const Duration(seconds: 3),
-                                  );
-                                  Get.to(Main());
-                                } else {
-                                  toastification.show(
-                                    backgroundColor: Colors.red,
-                                    context: context,
-                                    title:
-                                        const Text("The information is invalid"),
-                                    autoCloseDuration:
-                                        const Duration(seconds: 3),
-                                  );
-                                }
-                              } catch (error) {
-                                toastification.show(
-                                  backgroundColor: Colors.red,
-                                  context: context,
-                                  title:
-                                      const Text("An error occurred"),
-                                  autoCloseDuration:
-                                      const Duration(seconds: 3),
-                                );
-                              } finally {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              }
-                            } else {
-                              toastification.show(
-                                backgroundColor: Colors.red,
-                                context: context,
-                                title:
-                                    const Text("The information is invalid"),
-                                autoCloseDuration:
-                                    const Duration(seconds: 3),
-                              );
-                            }
-                            Get.to(Main());
-                          },
+                          //             if (response.statusCode == 200) {
+                          //               toastification.show(
+                          //                 backgroundColor: Colors.green,
+                          //                 context: context,
+                          //                 title:
+                          //                     const Text("Login successfully"),
+                          //                 autoCloseDuration:
+                          //                     const Duration(seconds: 3),
+                          //               );
+                          //               Get.to(Main());
+                          //             } else {
+                          //               toastification.show(
+                          //                 backgroundColor: Colors.red,
+                          //                 context: context,
+                          //                 title: const Text(
+                          //                     "The information is invalid"),
+                          //                 autoCloseDuration:
+                          //                     const Duration(seconds: 3),
+                          //               );
+                          //             }
+                          //           } catch (error) {
+                          //             toastification.show(
+                          //               backgroundColor: Colors.red,
+                          //               context: context,
+                          //               title: const Text("An error occurred"),
+                          //               autoCloseDuration:
+                          //                   const Duration(seconds: 3),
+                          //             );
+                          //           } finally {
+                          //             setState(() {
+                          //               isLoading = false;
+                          //             });
+                          //           }
+                          //         } else {
+                          //           toastification.show(
+                          //             backgroundColor: Colors.red,
+                          //             context: context,
+                          //             title: const Text(
+                          //                 "The information is invalid"),
+                          //             autoCloseDuration:
+                          //                 const Duration(seconds: 3),
+                          //           );
+                          //         }
+                          //         Get.to(Main());
                           style: stylebtn(Colors.black, const Color(0xFFF6B100),
-                              20, 30, 15),
+                              15, 30, 15),
                           child: isLoading
                               ? const CircularProgressIndicator(
-                                  valueColor:
-                                      AlwaysStoppedAnimation<Color>(Colors.white),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white),
                                 )
                               : const Text("Login"),
                         ),
@@ -233,7 +235,7 @@ class _LoginPageState extends State<LoginPage> {
                             Get.to(const Register());
                           },
                           style:
-                              stylebtn(Colors.white, Colors.black, 20, 30, 15),
+                              stylebtn(Colors.white, Colors.black, 15, 30, 15),
                           child: const Text("Create Account"),
                         ),
                       ),
@@ -241,8 +243,12 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          txtbtn('Conditions of Use', () => Get.to(const ConditionOfUse()),),
-                          txtbtn('Privacy Notice',() => Get.to(const PrivacyNotice())),
+                          txtbtn(
+                            'Conditions of Use',
+                            () => Get.to(const ConditionOfUse()),
+                          ),
+                          txtbtn('Privacy Notice',
+                              () => Get.to(const PrivacyNotice())),
                         ],
                       )
                     ],

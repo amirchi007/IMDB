@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imdb/pages/main/rating.dart';
 import 'package:imdb/pages/resource/resource.dart';
-import 'package:imdb/routing/auth/login.dart';
 import 'package:get/get.dart';
 import 'package:imdb/routing/main/rating.dart';
 

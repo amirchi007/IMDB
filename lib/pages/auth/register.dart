@@ -169,85 +169,86 @@ class _RegisterPageState extends State<RegisterPage> {
                       width: double.infinity,
                       decoration: shadowbtn(),
                       child: ElevatedButton(
-                        onPressed: isLoading
-                            ? null
-                            : () async {
-                                if (_SignUpCardcardKey.currentState!
-                                    .validate()) {
-                                  setState(() {
-                                    isLoading = true; // شروع بارگذاری
-                                  });
+                        onPressed: () {},
+                        // onPressed: isLoading
+                        //     ? null
+                        //     : () async {
+                        //         if (_SignUpCardcardKey.currentState!
+                        //             .validate()) {
+                        //           setState(() {
+                        //             isLoading = true; // شروع بارگذاری
+                        //           });
 
-                                  http
-                                      .post(
-                                    Uri.parse(
-                                        'http://192.168.43.154/api/register'),
-                                    headers: {
-                                      HttpHeaders.contentTypeHeader:
-                                          'application/json; charset=UTF-8',
-                                    },
-                                    body: jsonEncode({
-                                      'name': SignUpCardName.text,
-                                      'email': SignUpCardUsername.text,
-                                      'phone': SignUpCardEmail.text,
-                                      'password': SignUpCardPassword.text,
-                                    }),
-                                  )
-                                      .then((value) {
-                                    setState(() {
-                                      isLoading = false; // پایان بارگذاری
-                                    });
+                        //           http
+                        //               .post(
+                        //             Uri.parse(
+                        //                 'http://192.168.43.154/api/register'),
+                        //             headers: {
+                        //               HttpHeaders.contentTypeHeader:
+                        //                   'application/json; charset=UTF-8',
+                        //             },
+                        //             body: jsonEncode({
+                        //               'name': SignUpCardName.text,
+                        //               'email': SignUpCardUsername.text,
+                        //               'phone': SignUpCardEmail.text,
+                        //               'password': SignUpCardPassword.text,
+                        //             }),
+                        //           )
+                        //               .then((value) {
+                        //             setState(() {
+                        //               isLoading = false; // پایان بارگذاری
+                        //             });
 
-                                    if (value.statusCode == 200) {
-                                      toastification.show(
-                                          backgroundColor: Colors.green,
-                                          context: context,
-                                          title: const Text(
-                                              "Signed up successfully"),
-                                          autoCloseDuration:
-                                              const Duration(seconds: 3));
-                                      Get.to(const Login());
-                                    } else if (value.statusCode == 409) {
-                                      toastification.show(
-                                          backgroundColor: Colors.red,
-                                          context: context,
-                                          title: const Text(
-                                              "Account already exists"),
-                                          autoCloseDuration:
-                                              const Duration(seconds: 3));
-                                    } else {
-                                      toastification.show(
-                                          backgroundColor: Colors.red,
-                                          context: context,
-                                          title: const Text(
-                                              "The information is invalid"),
-                                          autoCloseDuration:
-                                              const Duration(seconds: 3));
-                                    }
-                                  }).onError((error, stackTrace) {
-                                    setState(() {
-                                      isLoading =
-                                          false; // پایان بارگذاری در صورت بروز خطا
-                                    });
+                        //             if (value.statusCode == 200) {
+                        //               toastification.show(
+                        //                   backgroundColor: Colors.green,
+                        //                   context: context,
+                        //                   title: const Text(
+                        //                       "Signed up successfully"),
+                        //                   autoCloseDuration:
+                        //                       const Duration(seconds: 3));
+                        //               Get.to(const Login());
+                        //             } else if (value.statusCode == 409) {
+                        //               toastification.show(
+                        //                   backgroundColor: Colors.red,
+                        //                   context: context,
+                        //                   title: const Text(
+                        //                       "Account already exists"),
+                        //                   autoCloseDuration:
+                        //                       const Duration(seconds: 3));
+                        //             } else {
+                        //               toastification.show(
+                        //                   backgroundColor: Colors.red,
+                        //                   context: context,
+                        //                   title: const Text(
+                        //                       "The information is invalid"),
+                        //                   autoCloseDuration:
+                        //                       const Duration(seconds: 3));
+                        //             }
+                        //           }).onError((error, stackTrace) {
+                        //             setState(() {
+                        //               isLoading =
+                        //                   false; // پایان بارگذاری در صورت بروز خطا
+                        //             });
 
-                                    toastification.show(
-                                        backgroundColor: Colors.red,
-                                        context: context,
-                                        title: const Text(
-                                            "The information is invalid"),
-                                        autoCloseDuration:
-                                            const Duration(seconds: 3));
-                                  });
-                                } else {
-                                  toastification.show(
-                                      backgroundColor: Colors.red,
-                                      context: context,
-                                      title: const Text(
-                                          "The information is invalid"),
-                                      autoCloseDuration:
-                                          const Duration(seconds: 3));
-                                }
-                              },
+                        //             toastification.show(
+                        //                 backgroundColor: Colors.red,
+                        //                 context: context,
+                        //                 title: const Text(
+                        //                     "The information is invalid"),
+                        //                 autoCloseDuration:
+                        //                     const Duration(seconds: 3));
+                        //           });
+                        //         } else {
+                        //           toastification.show(
+                        //               backgroundColor: Colors.red,
+                        //               context: context,
+                        //               title: const Text(
+                        //                   "The information is invalid"),
+                        //               autoCloseDuration:
+                        //                   const Duration(seconds: 3));
+                        //         }
+                        //       },
                         style: stylebtn(
                             Colors.black, const Color(0xFFF6B100), 0, 30, 15),
                         child: isLoading
@@ -267,7 +268,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         onPressed: () async {
                           Get.to(const Login());
                         },
-                        style: stylebtn(Colors.white, Colors.black, 20, 30, 15),
+                        style: stylebtn(Colors.white, Colors.black, 15, 30, 15),
                         child: const Text("Login"),
                       ),
                     ),
@@ -275,8 +276,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        txtbtn('Conditions of Use',() => Get.to(const ConditionOfUse())),
-                        txtbtn('Privacy Notice',() => Get.to(const PrivacyNotice())),
+                        txtbtn('Conditions of Use',
+                            () => Get.to(const ConditionOfUse())),
+                        txtbtn('Privacy Notice',
+                            () => Get.to(const PrivacyNotice())),
                       ],
                     )
                   ],

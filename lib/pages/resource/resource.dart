@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:math';
-import 'package:imdb/pages/main/movie.dart';
-import 'package:imdb/pages/main/profile.dart';
-import 'package:imdb/pages/main/rating.dart';
-import 'package:imdb/pages/main/search.dart';
-import 'package:imdb/routing/auth/login.dart';
 import 'package:imdb/routing/main/movie.dart';
 
 shadowtxt() {
@@ -81,9 +75,9 @@ txtbtn(String? title, VoidCallback onPressed) {
   );
 }
 
-txtbtnhome(String? title,  VoidCallback onPressed) {
+txtbtnhome(String? title, VoidCallback onPressed) {
   return TextButton(
- onPressed: onPressed,
+    onPressed: onPressed,
     child: Text(
       title!,
       style: const TextStyle(
@@ -106,8 +100,13 @@ shadowbtn() {
   );
 }
 
-stylebtn(Color foregroundColor, Color backgroundColor, double vertical,
-    double horizontal, double fontsize,) {
+stylebtn(
+  Color foregroundColor,
+  Color backgroundColor,
+  double vertical,
+  double horizontal,
+  double fontsize,
+) {
   return ElevatedButton.styleFrom(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     foregroundColor: foregroundColor,
@@ -120,9 +119,8 @@ stylebtn(Color foregroundColor, Color backgroundColor, double vertical,
 }
 
 stylebtnn(Color foregroundColor, Color backgroundColor, double vertical,
-    double horizontal, double fontsize,VoidCallback onPressed) {
-  return  
-  ElevatedButton.styleFrom(
+    double horizontal, double fontsize, VoidCallback onPressed) {
+  return ElevatedButton.styleFrom(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     foregroundColor: foregroundColor,
     backgroundColor: backgroundColor,
@@ -132,8 +130,6 @@ stylebtnn(Color foregroundColor, Color backgroundColor, double vertical,
     ),
   );
 }
-
-
 
 SizedBoxE(String imagePath, String title) {
   return InkWell(
@@ -156,9 +152,9 @@ linetxtlogin(String title) {
   return Row(
     children: <Widget>[
       Image.asset('assets/images/line.png'),
-      const SizedBox(width: 40),
+      const SizedBox(width: 55),
       Text(title),
-      const SizedBox(width: 40),
+      const SizedBox(width: 30),
       Image.asset('assets/images/line.png'),
     ],
   );
@@ -241,7 +237,7 @@ List<Widget> imageSliders() {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   txtstyle(title, Color(0xFFF5C418), 17, FontWeight.normal),
+                  txtstyle(title, Color(0xFFF5C418), 17, FontWeight.normal),
                   txtstyle(explain, Colors.white, 10, FontWeight.normal),
                   evaluatedButton('See More', () {
                     Get.to(const MovieRouting());
@@ -255,22 +251,20 @@ List<Widget> imageSliders() {
     );
   }).toList();
 }
-                   
 
 Widget evaluatedButton(String text, VoidCallback onPressed) {
   return ElevatedButton(
     onPressed: onPressed,
     style: ElevatedButton.styleFrom(
-      backgroundColor: Color(0xFFF5C418), 
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5), 
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5), 
-      minimumSize: Size(0, 0)
-    ),
+        backgroundColor: Color(0xFFF5C418),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        minimumSize: Size(0, 0)),
     child: Text(
       text,
-      style: const TextStyle(color: Colors.black), 
+      style: const TextStyle(color: Colors.black),
     ),
   );
 }
@@ -403,8 +397,6 @@ class RatingDialog extends StatefulWidget {
   @override
   _RatingDialogState createState() => _RatingDialogState();
 }
-
-
 
 class _RatingDialogState extends State<RatingDialog> {
   late double _rating;

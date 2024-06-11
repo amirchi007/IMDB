@@ -5,7 +5,6 @@ import 'package:imdb/routing/auth/forgot_password.dart';
 import 'package:imdb/routing/auth/privacy_notice.dart';
 import 'package:imdb/routing/auth/condition_of_use.dart';
 import 'package:imdb/routing/main/main.dart';
-import 'package:imdb/pages/main/search.dart';
 
 routes() => [
       GetPage(

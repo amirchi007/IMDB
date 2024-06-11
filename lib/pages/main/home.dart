@@ -1,10 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:imdb/pages/main/movie.dart';
 import 'package:imdb/pages/resource/resource.dart';
-import 'package:imdb/routing/main/movie.dart';
-
+import 'package:imdb/routing/main/search.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -93,7 +91,7 @@ class _HomePageState extends State<HomePage> {
               txtstyle('Top 10 on IMDb this week', Colors.black, 15,
                   FontWeight.bold),
               const SizedBox(width: 110),
-              txtbtnhome('See More', () =>   Get.to(const MovieRouting())),
+              txtbtnhome('See More', () =>   Get.to(const Search())),
             ],
           ),
           const SizedBox(height: 10),

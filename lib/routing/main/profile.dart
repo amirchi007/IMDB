@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imdb/pages/appbar/main.dart';
-import 'package:imdb/pages/main/home.dart';
 import 'package:imdb/pages/main/profile.dart';
-import 'package:imdb/pages/main/search.dart';
 
 int currentPageIndex = 0;
 

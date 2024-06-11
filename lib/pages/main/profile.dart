@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:imdb/routing/auth/login.dart';
 import 'package:imdb/pages/resource/profile_resource.dart';
+import 'package:imdb/pages/resource/resource.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toastification/toastification.dart';
-
 
 class UserProfilePage extends StatefulWidget {
   @override
@@ -25,7 +24,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
   void initState() {
     super.initState();
     _loadUserData();
-    _loadRandomProfileImage();
     _loadFavoriteMovies();
   }
 
@@ -35,18 +33,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
       id = prefs.getString('id') ?? 'Unknown ID';
       email = prefs.getString('email') ?? 'example@gmail.com';
     });
-  }
-
-  Future<void> _loadRandomProfileImage() async {
-    final response = await http.get(Uri.parse('https://randomuser.me/api/'));
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      setState(() {
-        profileImageUrl = data['results'][0]['picture']['large'];
-      });
-    } else {
-      // Handle error
-    }
   }
 
   Future<void> _loadFavoriteMovies() async {
@@ -82,14 +68,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
       ];
     });
   }
-void _showPasswordChangeSuccessMessage() {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text('Password changed successfully!'),
-      backgroundColor: Colors.green,
-    ),
-  );
-}
+
+  void _showPasswordChangeSuccessMessage() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Password changed successfully!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
 
   void _toggleChangePassword() {
     setState(() {
@@ -105,35 +92,64 @@ void _showPasswordChangeSuccessMessage() {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 15),
-            CircleAvatar(
-              radius: 40,
-              backgroundImage: profileImageUrl.isNotEmpty
-                  ? NetworkImage(profileImageUrl)
-                  : const AssetImage("assets/images/profile.png")
-                      as ImageProvider,
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: profileImageUrl.isNotEmpty
+                        ? NetworkImage(profileImageUrl)
+                        : const AssetImage("assets/images/profile.png")
+                            as ImageProvider,
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        txtstyle(id, Colors.black, 20, FontWeight.bold),
+                        txtstyle(
+                            email,
+                            const Color.fromARGB(255, 122, 122, 122),
+                            15,
+                            FontWeight.normal),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-            const SizedBox(height: 10),
-            Text(
-              id,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Text(email),
             if (!_showChangePassword)
               FavoriteMoviesSection(movies: favoriteMovies),
             if (!_showChangePassword)
               Column(
                 children: [
-                  ChangePasswordButton(onPressed: _toggleChangePassword),
-                  LogoutButton(text: 'Logout',
+                  const SizedBox(height: 20),
+                  // ChangePasswordButton(onPressed: _toggleChangePassword),
+                  ElevatedButton(
                     onPressed: () {
-                    Get.to(Login());
-                    // Logout logic here
-                  }),
+                      _showChangePassword = !_showChangePassword;
+                    },
+                    style: stylebtn(Colors.white, Colors.black, 15, 115, 15),
+                    child: const Text("Change Password"),
+                  ),
+                  const SizedBox(height: 15),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Get.to(const Login());
+                    },
+                    style: stylebtn(Colors.white, Colors.black, 15, 150, 15),
+                    child: const Text("Logout"),
+                  ),
                 ],
               ),
             if (_showChangePassword)
-              ChangePasswordSection(onToggle: _toggleChangePassword,onPasswordChanged: _showPasswordChangeSuccessMessage),
-            
+              ChangePasswordSection(
+                  onToggle: _toggleChangePassword,
+                  onPasswordChanged: _showPasswordChangeSuccessMessage),
           ],
         ),
       ),

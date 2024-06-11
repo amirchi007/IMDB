@@ -64,7 +64,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         onPressed: () async {
                           //forget password: sent email
                         },
-                        style: stylebtn(Colors.white, Colors.black, 20, 30, 15),
+                        style: stylebtn(Colors.black, const Color(0xFFFFB409), 15, 30, 15),
                         child: const Text("Continue"),
                       ),
                     ),
@@ -77,7 +77,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           Get.to(const Login());
                         },
                         style: stylebtn(
-                            Colors.white, const Color(0xFFFFB409), 20, 30, 15),
+                            Colors.white, Colors.black, 15, 30, 15),
                         child: const Text("Back"),
                       ),
                     ),
@@ -85,8 +85,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        txtbtn('Conditions of Use', () => Get.to(const ConditionOfUse())),
-                        txtbtn('Privacy Notice', () => Get.to(const PrivacyNotice())),
+                        txtbtn('Conditions of Use',
+                            () => Get.to(const ConditionOfUse())),
+                        txtbtn('Privacy Notice',
+                            () => Get.to(const PrivacyNotice())),
                       ],
                     )
                   ],

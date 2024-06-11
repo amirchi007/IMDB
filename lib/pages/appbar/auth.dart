@@ -9,6 +9,7 @@ class AuthAppbarPage extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       decoration: shadowtxt(),
       child: AppBar(
+        automaticallyImplyLeading: false,
         title: Center(child: Image.asset('assets/images/imdb1.png')),
         backgroundColor: const Color(0xFFF5C418),
       ),

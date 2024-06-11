@@ -44,12 +44,12 @@ Future<User?> loadUser() async {
   return null;
 }
 
-
 class MovieCard extends StatelessWidget {
   final String title;
   final String imageUrl;
   final String imgurl;
-  MovieCard({required this.title, required this.imageUrl,required this.imgurl});
+  MovieCard(
+      {required this.title, required this.imageUrl, required this.imgurl});
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,6 @@ class MovieCard extends StatelessWidget {
     );
   }
 }
-
 
 class UserInfoSection extends StatelessWidget {
   final User user;
@@ -154,24 +153,24 @@ class FavoriteMoviesSection extends StatelessWidget {
   }
 }
 
+// class ChangePasswordButton extends StatelessWidget {
+//   final VoidCallback onPressed;
 
-class ChangePasswordButton extends StatelessWidget {
-  final VoidCallback onPressed;
+//   ChangePasswordButton({required this.onPressed});
 
-  ChangePasswordButton({required this.onPressed});
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.all(16.0),
+//       child: ElevatedButton(
+//         onPressed: onPressed,
+//         child: Text('Change Password'),
+//         style: stylebtn2(Colors.white, Colors.black, 10, 400, 15),
+//       ),
+//     );
+//   }
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        child: Text('Change Password'),
-        style: stylebtn(Colors.white, Colors.black, 10, 400, 15),
-      ),
-    );
-  }
-}
 class LogoutButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
@@ -181,16 +180,15 @@ class LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 3.0),
       child: ElevatedButton(
         onPressed: onPressed,
         child: Text(text),
-        style: stylebtn(Colors.white, Colors.black, 10, 400, 15),
+        style: stylebtn2(Colors.white, Colors.black, 10, 400, 15),
       ),
     );
   }
 }
-
 
 class SaveChangesButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -204,27 +202,29 @@ class SaveChangesButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         child: Text('Save Changes'),
-        style: stylebtn(Colors.white, Colors.black, 10, 400, 15),
+        style: stylebtn2(Colors.white, Colors.black, 10, 400, 15),
       ),
     );
   }
 }
 
-
 class ChangePasswordSection extends StatefulWidget {
   final VoidCallback onToggle;
   final VoidCallback onPasswordChanged;
 
-  ChangePasswordSection({required this.onToggle, required this.onPasswordChanged});
+  ChangePasswordSection(
+      {required this.onToggle, required this.onPasswordChanged});
 
   @override
   _ChangePasswordSectionState createState() => _ChangePasswordSectionState();
 }
 
 class _ChangePasswordSectionState extends State<ChangePasswordSection> {
-  final TextEditingController _currentPasswordController = TextEditingController();
+  final TextEditingController _currentPasswordController =
+      TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   bool _isLoading = false;
 
   void _changePassword() async {
@@ -363,23 +363,17 @@ class _ChangePasswordSectionState extends State<ChangePasswordSection> {
                   onPressed: _changePassword,
                   text: 'Save Changes',
                 ),
-         LogoutButton(
-                  onPressed: widget.onToggle,
-                  text: 'Cancel',
-                ),
+          LogoutButton(
+            onPressed: widget.onToggle,
+            text: 'Cancel',
+          ),
         ],
       ),
     );
   }
 }
 
- 
-
-
-
-
-stylebtn(
-    Color clr, Color clr2, double rad, double w, double fntsz) {
+stylebtn2(Color clr, Color clr2, double rad, double w, double fntsz) {
   return ElevatedButton.styleFrom(
     backgroundColor: clr2,
     foregroundColor: clr,

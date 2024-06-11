@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:imdb/pages/resource/resource.dart';
-import 'package:imdb/pages/main/movie.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:imdb/routing/main/movie.dart';
