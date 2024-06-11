@@ -10,6 +10,63 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String email = "nima_8a@yahoo.com";
+  String id = "Nima Malakootikhah";
+
+  void _editDetails() {
+    final emailController = TextEditingController(text: email);
+    final idController = TextEditingController(text: id);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: 
+           txtstyle(
+                    "Edit Details", Colors.purple, 18, FontWeight.normal),
+        
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: idController,
+                decoration: input("ID", "Enter Your ID")
+              ),
+              const SizedBox(height: 20,),
+              TextFormField(
+                controller: emailController,
+                decoration: input("Email", "Enter Your Email")
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child:  txtstyle(
+                    "Cancel", Colors.purple, 15, FontWeight.normal),
+        
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  email = emailController.text;
+                  id = idController.text;
+                });
+                Navigator.of(context).pop();
+              },
+              child:  txtstyle(
+                    "Save", Colors.purple, 15, FontWeight.normal),
+        
+            ),
+            
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -33,10 +90,17 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      txtstyle("Nima Malakootikhah", Colors.black, 20,
-                          FontWeight.bold),
+                      Row(
+                        children: [
+                          txtstyle(id, Colors.black, 20, FontWeight.bold),
+                          IconButton(
+                            icon: const Icon(Icons.edit),
+                            onPressed: _editDetails,
+                          ),
+                        ],
+                      ),
                       txtstyle(
-                          "nima_8a@yahoo.com",
+                          email,
                           const Color.fromARGB(255, 122, 122, 122),
                           15,
                           FontWeight.normal),

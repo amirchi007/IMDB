@@ -272,7 +272,7 @@ class _RatingAndReviewsPageState extends State<RatingAndReviewsPage> {
                                     Icons.star,
                                     color: Colors.amber,
                                   ),
-                                  itemCount: 5,
+                                  itemCount: 10,
                                   itemSize: 20.0,
                                   direction: Axis.horizontal,
                                 ),
