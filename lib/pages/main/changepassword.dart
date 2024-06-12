@@ -100,7 +100,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       );
                     }
                   },
-                  style: stylebtn(Colors.white, Colors.black, 20, 165, 12),
+                  style: stylebtn(
+                      Colors.black, const Color(0xFFF6B100), 15, 160, 15),
                   child: const Text("Change"),
                 ),
                 const SizedBox(
@@ -110,7 +111,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   onPressed: () {
                     Get.to(const Profile());
                   },
-                  style: stylebtn(Colors.white, Colors.black, 20, 167, 12),
+                  style: stylebtn(Colors.white, Colors.black, 15, 162, 15),
                   child: const Text("Cancel"),
                 ),
               ],

@@ -13,9 +13,8 @@ class IMDBApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         navigationBarTheme: NavigationBarThemeData(
-          labelTextStyle:
-              MaterialStateProperty.resolveWith<TextStyle>((states) {
-            if (states.contains(MaterialState.selected)) {
+          labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
+            if (states.contains(WidgetState.selected)) {
               return const TextStyle(color: Color(0xFFF5C418));
             }
             return const TextStyle(color: Colors.white);
@@ -23,8 +22,7 @@ class IMDBApp extends StatelessWidget {
         ),
       ),
       title: 'IMDB',
-      // initialRoute: '/login',
-      initialRoute: '/main',
+      initialRoute: '/login',
       getPages: routes(),
     );
   }
