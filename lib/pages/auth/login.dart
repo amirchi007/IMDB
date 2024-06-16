@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:imdb/models/login.dart';
 import 'package:imdb/pages/resource.dart';
 import 'package:imdb/routing/auth/condition_of_use.dart';
 import 'package:imdb/routing/auth/privacy_notice.dart';
 import 'package:imdb/routing/auth/forgot_password.dart';
 import 'package:imdb/routing/auth/register.dart';
+import 'package:imdb/services/loginService.dart';
 import 'package:imdb/routing/main/main.dart';
 import 'package:toastification/toastification.dart';
 import 'package:get/get.dart';
@@ -23,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   bool password_show = true;
   bool isLoading = false;
   IconData password_icon = Icons.visibility;
-  final loginUsername = TextEditingController();
+  final loginEmail = TextEditingController();
   final loginPassword = TextEditingController();
   final _logincardKey = GlobalKey<FormState>();
 
@@ -45,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        controller: loginUsername,
+                        controller: loginEmail,
                         validator: (value) {
                           RegExp emailRegex =
                               RegExp(r'^[a-zA-Z0-9._%+-]+@gmail\.com$');
@@ -148,74 +150,14 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: shadowbtn(),
                         child: ElevatedButton(
                           onPressed: () {
-                            Get.to(const Main());
+                            if (!_logincardKey.currentState!.validate()) return;
+                            LoginForm formData = LoginForm(
+                              email: loginEmail.text,
+                              password: loginPassword.text,
+                            );
+                            RegisterApiService.loginFormData(
+                                formData.email, formData.password, context);
                           },
-                          // onPressed: isLoading
-                          //     ? null
-                          //     : () async {
-                          //         if (_logincardKey.currentState!.validate()) {
-                          //           setState(() {
-                          //             isLoading = true;
-                          //           });
-
-                          //           try {
-                          //             final response = await http.post(
-                          //               Uri.parse(
-                          //                   'http://192.168.43.154/api/login'),
-                          //               headers: {
-                          //                 HttpHeaders.contentTypeHeader:
-                          //                     'application/json; charset=UTF-8',
-                          //               },
-                          //               body: jsonEncode({
-                          //                 'username': loginUsername.text,
-                          //                 'password': loginPassword.text,
-                          //               }),
-                          //             );
-
-                          //             if (response.statusCode == 200) {
-                          //               toastification.show(
-                          //                 backgroundColor: Colors.green,
-                          //                 context: context,
-                          //                 title:
-                          //                     const Text("Login successfully"),
-                          //                 autoCloseDuration:
-                          //                     const Duration(seconds: 3),
-                          //               );
-                          //               Get.to(Main());
-                          //             } else {
-                          //               toastification.show(
-                          //                 backgroundColor: Colors.red,
-                          //                 context: context,
-                          //                 title: const Text(
-                          //                     "The information is invalid"),
-                          //                 autoCloseDuration:
-                          //                     const Duration(seconds: 3),
-                          //               );
-                          //             }
-                          //           } catch (error) {
-                          //             toastification.show(
-                          //               backgroundColor: Colors.red,
-                          //               context: context,
-                          //               title: const Text("An error occurred"),
-                          //               autoCloseDuration:
-                          //                   const Duration(seconds: 3),
-                          //             );
-                          //           } finally {
-                          //             setState(() {
-                          //               isLoading = false;
-                          //             });
-                          //           }
-                          //         } else {
-                          //           toastification.show(
-                          //             backgroundColor: Colors.red,
-                          //             context: context,
-                          //             title: const Text(
-                          //                 "The information is invalid"),
-                          //             autoCloseDuration:
-                          //                 const Duration(seconds: 3),
-                          //           );
-                          //         }
-                          //         Get.to(Main());
                           style: stylebtn(Colors.black, const Color(0xFFF6B100),
                               15, 30, 15),
                           child: isLoading

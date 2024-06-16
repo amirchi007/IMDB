@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imdb/routing/main/movie.dart';
 
+String api = "http://10.0.2.2/api/";
+
 shadowtxt() {
   return const BoxDecoration(
     boxShadow: [
@@ -99,6 +101,7 @@ shadowbtn() {
     ],
   );
 }
+
 
 stylebtn(
   Color foregroundColor,

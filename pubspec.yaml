@@ -37,6 +37,8 @@ dependencies:
   flutter_pannable_rating_bar: ^2.7.2+1
   flutter_rating_bar: ^4.0.1
   shared_preferences: ^2.2.3
+  dio: ^5.4.3+1
+  flutter_secure_storage: ^9.2.2
 
 dev_dependencies:
   flutter_test:
